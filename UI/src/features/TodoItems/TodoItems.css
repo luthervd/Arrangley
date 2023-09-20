@@ -1,0 +1,17 @@
+.todo-list{
+    list-style: none;
+}
+
+
+.todo-item{
+    height: 250px;
+    width: 150px;
+    border: 1px solid black;
+}
+
+.todo-item header{
+    background: #777;
+    height: 50px;
+    line-height: 50px;
+    color: white;
+}
