@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OrganizeApi.Todo;
 using Npgsql.EntityFrameworkCore.PostgreSQL;
-using OrganizeApi.Shared;
+using OrganizeApi.JsonPatch;
 
 namespace OrganizeApi.Extensions;
 

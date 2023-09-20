@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics.SymbolStore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.OpenApi;
-using OrganizeApi.Shared;
+using OrganizeApi.JsonPatch;
 
 namespace OrganizeApi.Todo;
 
