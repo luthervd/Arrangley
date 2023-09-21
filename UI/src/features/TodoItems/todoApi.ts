@@ -15,3 +15,8 @@ export async function saveTodoItem(item: TodoItem) : Promise<TodoItem>{
     });
     return await  result.json() as TodoItem;
 }
+
+export async function deleteTodoItem(itemId: number) : Promise<boolean>{
+    let result = await fetch(`${url}/${itemId}`,{ method: "DELETE" });
+    return result.ok;
+}

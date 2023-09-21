@@ -5,7 +5,7 @@ import { TodoItem } from './todoItem';
 import { DateTime } from 'luxon';
 
 const defaultPending = {
-    created: DateTime.now().toISO(), description: "", due: DateTime.now().toISO(), name: ""
+    created: DateTime.now().toISO(), description: "", due: DateTime.now().plus({days: 7}).toISO(), name: ""
 };
 export function CreateItem(){
     const [pendingItem, setPendingItem ] = useState<TodoItem>(defaultPending);

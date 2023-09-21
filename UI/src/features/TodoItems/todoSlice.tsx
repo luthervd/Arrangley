@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import { useAppDispatch } from "../../app/hooks"
 import { RootState, AppThunk } from "../../app/store"
-import { fetchTodoLists, saveTodoItem } from "./todoApi";
+import { fetchTodoLists, saveTodoItem, deleteTodoItem } from "./todoApi";
 import {TodoItem} from "./todoItem";
 
 
@@ -9,12 +8,14 @@ export interface TodoItemsState {
     items: Array<TodoItem>
     status: "idle" | "loading" | "failed",
     savingStatus: "idle" | "saving" | "failed"
+    deletingStatus: "idle" | "deleting" | "failed"
 }
 
 const initialState: TodoItemsState = {
     items: [],
     status: "idle",
-    savingStatus: "idle"
+    savingStatus: "idle",
+    deletingStatus: "idle"
 }
 
 export const loadAsync = createAsyncThunk(
@@ -52,6 +53,17 @@ export const saveTodoAsync = createAsyncThunk(
     }
 )
 
+export const deleteTodoAsync  = createAsyncThunk(
+    "todo/deleteItem",
+    async(itemId: number, api)=> {
+        const isDeleted = await deleteTodoItem(itemId);
+        if(isDeleted){
+            api.dispatch(loadAsync());
+        }
+        return isDeleted;
+    }
+)
+
 export const todoSlice = createSlice({
     name: "todo",
     initialState,
@@ -79,6 +91,15 @@ export const todoSlice = createSlice({
         })
         .addCase(saveTodoAsync.rejected, (state) => {
             state.savingStatus = 'failed';
+        })
+        .addCase(deleteTodoAsync.pending, (state) => {
+            state.deletingStatus = "deleting";
+        })
+        .addCase(deleteTodoAsync.fulfilled, (state, action) => {
+            state.savingStatus ='idle';
+        })
+        .addCase(deleteTodoAsync.rejected, (state) => {
+            state.savingStatus ='failed';
         })
 
     },

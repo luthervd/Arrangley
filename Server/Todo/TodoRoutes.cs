@@ -1,6 +1,4 @@
-﻿using System.Diagnostics.SymbolStore;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.OpenApi;
+﻿using Microsoft.EntityFrameworkCore;
 using OrganizeApi.JsonPatch;
 
 namespace OrganizeApi.Todo;
@@ -30,6 +28,7 @@ public static class TodoRoutes
         })
         .WithName("CreateTodoItem")
         .WithOpenApi();
+        
         app.MapPatch("/todo/{id}", async (HttpContext httpContext, IJsonPatchHandler handler, int id, JsonPatch<TodoItem> patch, TodoContext context) =>
         {
             var item = await context.TodoItems.FirstOrDefaultAsync(x => x.Id == id);
@@ -44,6 +43,23 @@ public static class TodoRoutes
             httpContext.Response.StatusCode = 200;
         })
         .WithName("PatchTodoItem")
+        .WithOpenApi();
+
+        app.MapDelete("/todo/{id}", async (HttpContext context, int id, TodoContext dbContext) =>
+        {
+            var item = await dbContext.TodoItems.FirstOrDefaultAsync(x => x.Id == id);
+            if (item == null)
+            {
+                context.Response.StatusCode = 400;
+            }
+            else
+            {
+                dbContext.TodoItems.Remove(item);
+                var removed = await dbContext.SaveChangesAsync();
+                context.Response.StatusCode = removed == 1 ? 200 : 400;
+            }
+        })
+        .WithName("DeleteTodoItem")
         .WithOpenApi();
 
     }
