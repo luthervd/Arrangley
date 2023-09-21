@@ -1,9 +1,11 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit"
 import todoReducer from "../features/TodoItems/todoSlice";
+import menuReducer from '../features/menu/menuSlice';
 
 export const store = configureStore({
   reducer: {
-    todoItems: todoReducer
+    todoItems: todoReducer,
+    menu: menuReducer
   },
 })
 

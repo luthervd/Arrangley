@@ -4,19 +4,19 @@ import { fetchTodoLists, saveTodoItem, deleteTodoItem } from "./todoApi";
 import {TodoItem} from "./todoItem";
 
 
-export interface TodoItemsState {
+interface TodoItemsState {
     items: Array<TodoItem>
     status: "idle" | "loading" | "failed",
     savingStatus: "idle" | "saving" | "failed"
     deletingStatus: "idle" | "deleting" | "failed"
 }
 
-const initialState: TodoItemsState = {
+const initialState = {
     items: [],
     status: "idle",
     savingStatus: "idle",
     deletingStatus: "idle"
-}
+} as TodoItemsState;
 
 export const loadAsync = createAsyncThunk(
     "todo/fetchItems",

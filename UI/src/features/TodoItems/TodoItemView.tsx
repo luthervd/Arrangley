@@ -11,11 +11,11 @@ export default function TodoItemView(props: { item: TodoItem }){
 
     const now = DateTime.now();
 
-    const daysSinceCreated = now.diff(created,["days"]);
+    const daysSinceCreated = Math.floor(now.diff(created,["days"]).days)
 
-    const daysTillDue  = Math.round(due.diff(now,["days"]).days);
+    const daysTillDue  = Math.floor(due.diff(now,["days"]).days);
 
-    const createdMessage = daysSinceCreated.days < 1 ? "Created today" : `Created ${daysSinceCreated.days} days ago`;
+    const createdMessage = daysSinceCreated < 1 ? "Created today" : `Created ${daysSinceCreated} days ago`;
 
     let dueMessage = "";
     if(daysTillDue < 0){
@@ -28,20 +28,21 @@ export default function TodoItemView(props: { item: TodoItem }){
         dueMessage = `Due in ${daysTillDue} days`;
     }
     return (
-        <div className="todo-item">
-            <header>
-                { props.item.name }
+        <div className="card todo-item">
+            <header className="card-header">
+                <p className="card-header-title">{ props.item.name }</p>
             </header>
-            <section className="item-description">
-                { props.item.description }
-            </section>
-            <section>
-                <label>{createdMessage}</label>
-            </section>
-            <section>
-                <label>{dueMessage}</label>
-            </section>
-            <button onClick={evt => dispatch(deleteTodoAsync(props.item.id ?? 0))}>Delete</button>
+            <div className="card-content">
+                <div className="content">
+                    <section>
+                    <label>{createdMessage}</label>
+                    </section>
+                    <section>
+                        <label>{dueMessage}</label>
+                    </section>
+                    <button className="button" onClick={evt => dispatch(deleteTodoAsync(props.item.id ?? 0))}>Delete</button>
+                </div>
+            </div>
         </div>
     )
 }

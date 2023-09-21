@@ -1,18 +1,9 @@
-.todo-list{
-    list-style: none;
+#items{
+    display: flex;
+    flex-direction: row;
 }
 
 
 .todo-item{
-    height: 250px;
-    width: 200px;
-    border: 1px solid black;
-    margin-bottom: 10px;
-}
-
-.todo-item header{
-    background: #777;
-    height: 50px;
-    line-height: 50px;
-    color: white;
+    margin: 0 10px 0 10px;
 }
