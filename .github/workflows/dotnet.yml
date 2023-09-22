@@ -24,8 +24,8 @@ jobs:
       shell: bash
       run: ls
     - name: Restore dependencies
-      run: dotnet restore ./server/OrganizeApi.csproj
+      run: dotnet restore ./Server/OrganizeApi.csproj
     - name: Build
-      run: dotnet build --no-restore ./server/OrganizeApi.csproj
+      run: dotnet build --no-restore ./Server/OrganizeApi.csproj
     #name: Test
     #run: dotnet test --no-build --verbosity normal
