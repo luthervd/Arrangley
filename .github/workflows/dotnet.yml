@@ -26,9 +26,9 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore ./Server/OrganizeApi.csproj
     - name: Build
-      run: dotnet publish --no-restore ./Server/OrganizeApi.csproj -o /dist
+      run: dotnet publish --no-restore ./Server/OrganizeApi.csproj -o ./Server/dist
     - name: Archive build
       uses: actions/upload-artifact@v3
       with:
         name: organize-build
-        path: /dist
+        path: ./Server/dist
