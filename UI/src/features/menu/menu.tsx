@@ -12,8 +12,8 @@ export default function Menu(props: any)
                 Organize
             </p>
             <ul className="menu-list">
-                <li><a onClick={evt => dispatch(selectMenuItem(menuItems.createItem))}>Create Item</a></li>
-                <li><a onClick={evt => dispatch(selectMenuItem(menuItems.stats))}>Stats</a></li>
+                <li><a className={menuItem === menuItems.tasks ? 'is-active' : ''} onClick={evt => dispatch(selectMenuItem(menuItems.tasks))}>Tasks</a></li>
+                <li><a className={menuItem === menuItems.createItem ? 'is-active' : ''} onClick={evt => dispatch(selectMenuItem(menuItems.createItem))}>Create Item</a></li>
             </ul>
         </aside>
     )

@@ -1,4 +1,4 @@
-import { TodoItems }  from './features/TodoItems/TodoItems';
+import { ViewManager } from './features/ViewManager/ViewManager';
 import Menu from './features/menu/menu';
 
 import 'bulma/css/bulma.min.css';
@@ -12,7 +12,7 @@ function App() {
           <Menu />    
         </div>
         <div className="column right-section">
-          <TodoItems />
+          <ViewManager />
         </div>
       </div>
     </div>
