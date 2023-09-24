@@ -23,7 +23,7 @@ jobs:
         npm --prefix ./UI run build --if-present
 
     - name: List folder
-      run: ls ./UI
+      run: ls /UI
      
     - name: SSH
       uses: ErenKrt/ssh-push@main
