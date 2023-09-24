@@ -25,11 +25,13 @@ jobs:
     - name: List folder
       run: ls ./UI/build
      
-    - name: SSH
-      uses: ErenKrt/ssh-push@main
+    - name: Deploy to Server
+      uses: easingthemes/ssh-deploy@main
       with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        private_key: ${{ secrets.PRIVATE_KEY }}
-        source: "./UI/build/"
-        outdir: ./app/test/
+          SSH_PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+          ARGS: "-rlgoDzvc -i --delete"
+          SOURCE: "./UI/build/"
+          REMOTE_HOST: ${{ secrets.HOST }}
+          REMOTE_USER: ${{ secrets.USER }}
+          TARGET: "./test"
+          EXCLUDE: "/dist/, /node_modules/"
