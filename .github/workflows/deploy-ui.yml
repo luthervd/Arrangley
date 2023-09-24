@@ -23,7 +23,7 @@ jobs:
         npm --prefix ./UI run build --if-present
 
     - name: List folder
-      run: ls /UI
+      run: ls ./UI/build
      
     - name: SSH
       uses: ErenKrt/ssh-push@main
@@ -31,5 +31,5 @@ jobs:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
         private_key: ${{ secrets.PRIVATE_KEY }}
-        source: "./UI/dist/"
+        source: "./UI/build/"
         outdir: ./app/test/
