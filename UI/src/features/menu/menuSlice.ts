@@ -20,7 +20,7 @@ export const menuSlice = createSlice({
     name: "menu",
     initialState,
     reducers: {
-        "selectMenuItem" : (state, action : { payload: string }) => {
+        selectMenuItem : (state, action : { payload: string }) => {
             state.selectedItem = action.payload;
         }
     }

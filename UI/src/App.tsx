@@ -1,10 +1,20 @@
 import { ViewManager } from './features/ViewManager/ViewManager';
+import { useAppSelector, useAppDispatch } from "./app/hooks";
+import { getUserState, login, readUserAsync } from './features/user/userSlice';
 import Menu from './features/menu/menu';
 
 import 'bulma/css/bulma.min.css';
 import "./App.css"
 
 function App() {
+  var user = useAppSelector(getUserState);
+  var dispatch = useAppDispatch();
+  if(user.isCallBack){
+    dispatch(readUserAsync());
+  }
+  else if(!user.isLoggedIn && user.readState !== "reading"){
+    dispatch(login());
+  }
   return (
     <div className="App">
       <div className="columns">
@@ -12,7 +22,7 @@ function App() {
           <Menu />    
         </div>
         <div className="column right-section">
-          <ViewManager />
+          {user.isLoggedIn ? <ViewManager /> : null}
         </div>
       </div>
     </div>
