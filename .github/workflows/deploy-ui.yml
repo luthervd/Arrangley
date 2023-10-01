@@ -31,8 +31,8 @@ jobs:
     - name: SSH
       run: |
          eval $(ssh-agent -s)
-         echo SSH_KEY
-         echo SSH_KEY | ssh-add -
+         echo "$SSH_KEY"
+         echo "$SSH_KEY" | ssh-add -
          mkdir -p ~/.ssh
          chmod 700 ~/.ssh
          ssh -o StrictHostKeyChecking=no luke@161.35.41.90 "cd ~; touch test.txt"
