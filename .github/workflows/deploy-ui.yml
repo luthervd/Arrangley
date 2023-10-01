@@ -39,5 +39,5 @@ jobs:
     - name: COPY FILES
       run : |
         zip -r build.zip ./UI/build
-        scp build.zip luke@161.35.41.90:./ui/build.zip
+        scp build.zip luke@161.35.41.90:./build.zip
         ssh -o StrictHostKeyChecking=no luke@161.35.41.90 "cd ~; rm -r ./ui/build; unzip build.zip ./ui/build;"
