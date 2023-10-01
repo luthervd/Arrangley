@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 
 env:
-  SSH_KEY = ${{ secrets.PRIVATE_KEY }}
+  SSH_KEY: ${{ secrets.PRIVATE_KEY }}
 jobs:
   deployment_job:
     runs-on: ubuntu-latest
