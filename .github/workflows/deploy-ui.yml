@@ -30,7 +30,6 @@ jobs:
      
     - name: SSH
       run: |
-         apt install openssh-client
          eval $(ssh-agent -s)
          echo SSH_KEY | tr -d '\r' | ssh-add -
          mkdir -p ~/.ssh
