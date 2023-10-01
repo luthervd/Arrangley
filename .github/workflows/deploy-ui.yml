@@ -28,10 +28,16 @@ jobs:
     - name: List folder
       run: ls ./UI/build
      
-    - name: SSH
+    - name: SETUP SSH
       run: |
          eval $(ssh-agent -s)
-         echo SSH_KEY | tr -d '\r' | ssh-add -
+         echo "$SSH_KEY" | ssh-add -
          mkdir -p ~/.ssh
          chmod 700 ~/.ssh
          ssh -o StrictHostKeyChecking=no luke@161.35.41.90 "cd ~; touch test.txt"
+    
+    - name: COPY FILES
+      run : |
+        zip -r build.zip ./UI/build
+        scp build.zip luke@161.35.41.90:./ui/build.zip
+        ssh -o StrictHostKeyChecking=no luke@161.35.41.90 "cd ~; rm -r ./ui/build; unzip build.zip build;"
