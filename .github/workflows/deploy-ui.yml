@@ -3,7 +3,9 @@ on:
     branches:
       - main
   workflow_dispatch:
-  
+
+env:
+  SSH_KEY = ${{ secrets.PRIVATE_KEY }}
 jobs:
   deployment_job:
     runs-on: ubuntu-latest
@@ -28,7 +30,7 @@ jobs:
      
     - name: SSH
       run: |
-         echo ${{ secrets.PRIVATE_KEY }} | tr -d '\r' | ssh-add -
+         echo SSH_KEY | tr -d '\r' | ssh-add -
          mkdir -p ~/.ssh
          chmod 700 ~/.ssh
          ssh -o StrictHostKeyChecking=no luke@161.35.41.90 "cd ~; touch test.txt"
