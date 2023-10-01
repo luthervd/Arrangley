@@ -27,11 +27,6 @@ jobs:
       run: ls ./UI/build
      
     - name: SSH
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USER }}
-        private_key: ${{ secrets.PRIVATE_KEY }}
-        source: "UI/build/"
       run: |
          echo ${{ secrets.PRIVATE_KEY }} | tr -d '\r' | ssh-add -
          mkdir -p ~/.ssh
