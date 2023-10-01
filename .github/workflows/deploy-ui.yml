@@ -37,4 +37,4 @@ jobs:
          ssh -o StrictHostKeyChecking=no luke@161.35.41.90 "cd ~; touch test.txt"
          zip -r build.zip ./UI/build
          scp -o StrictHostKeyChecking=no build.zip luke@161.35.41.90:./build.zip
-         ssh -o StrictHostKeyChecking=no luke@161.35.41.90 "cd ~; rm -r ./ui/build; mkdir ./ui/build; unzip ./build.zip -d ./ui/build;"
+         ssh -o StrictHostKeyChecking=no luke@161.35.41.90 "cd ~; rm -r ./UI; unzip ./build.zip -d ./"
