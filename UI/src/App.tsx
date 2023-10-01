@@ -12,17 +12,14 @@ function App() {
   if(user.isCallBack){
     dispatch(readUserAsync());
   }
-  else if(!user.isLoggedIn && user.readState !== "reading"){
-    dispatch(login());
-  }
   return (
     <div className="App">
       <div className="columns">
         <div className="column is-4-tablet is-3-desktop is-2-widescreen">
-          <Menu />    
+          {user.isLoggedIn ? <Menu /> : null}    
         </div>
         <div className="column right-section">
-          {user.isLoggedIn ? <ViewManager /> : null}
+          {<ViewManager />}
         </div>
       </div>
     </div>

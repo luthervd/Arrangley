@@ -9,7 +9,7 @@ export default function Menu(props: any)
     return(
         <aside className="menu">
             <p className="menu-label">
-                Organize
+                Arrangley
             </p>
             <ul className="menu-list">
                 <li><a className={menuItem === menuItems.tasks ? 'is-active' : ''} onClick={evt => dispatch(selectMenuItem(menuItems.tasks))}>Tasks</a></li>

@@ -17,18 +17,23 @@ jobs:
       with:
         node-version: 16
     
-    - name: npm install, build, and test
+    - name: yarn install, build, and test
       run: |
-        npm install ./UI
-        npm --prefix ./UI run build --if-present
+        cd ./UI
+        yarn install 
+        yarn run build
 
     - name: List folder
       run: ls ./UI/build
      
     - name: SSH
-      uses: ErenKrt/ssh-push@main
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USER }}
         private_key: ${{ secrets.PRIVATE_KEY }}
         source: "UI/build/"
+      run: |
+         echo ${{ secrets.PRIVATE_KEY }} | tr -d '\r' | ssh-add -
+         mkdir -p ~/.ssh
+         chmod 700 ~/.ssh
+         ssh -o StrictHostKeyChecking=no luke@161.35.41.90 "cd ~; touch test.txt"

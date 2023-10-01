@@ -1,11 +1,13 @@
 import {TodoItem} from "./todoItem";
 import { DateTime } from "luxon";
-import { useAppDispatch } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { deleteTodoAsync} from "./todoSlice";
+import { getUserState } from '../user/userSlice';
 
 export default function TodoItemView(props: { item: TodoItem }){
 
     const dispatch = useAppDispatch();
+    const userState = useAppSelector(getUserState);
     const created = DateTime.fromISO(props.item.created ?? "");
     const due = DateTime.fromISO(props.item.due ?? "");
 
@@ -40,7 +42,7 @@ export default function TodoItemView(props: { item: TodoItem }){
                     <section>
                         <label>{dueMessage}</label>
                     </section>
-                    <button className="button" onClick={evt => dispatch(deleteTodoAsync(props.item.id ?? 0))}>Delete</button>
+                    <button className="button" onClick={evt => dispatch(deleteTodoAsync({itemId: props.item.id ?? 0, user: userState.currentUser}))}>Delete</button>
                 </div>
             </div>
         </div>

@@ -1,14 +1,16 @@
 import { useState } from 'react';
-import { useAppDispatch } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { saveTodoAsync } from './todoSlice';
 import { TodoItem } from './todoItem';
 import { DateTime } from 'luxon';
+import { getUserState } from '../user/userSlice';
 
 const defaultPending = {
     created: DateTime.now().toISO(), description: "", due: DateTime.now().plus({days: 7}).toISO(), name: ""
 };
 export function CreateItem(){
     const [pendingItem, setPendingItem ] = useState<TodoItem>(defaultPending);
+    const user = useAppSelector(getUserState);
     const dispatch = useAppDispatch();
     return (
         <form className="form" onSubmit={evt => evt.preventDefault()}>
@@ -24,7 +26,7 @@ export function CreateItem(){
                     <textarea className="textarea" value={pendingItem.description} onChange={descEvt => setPendingItem({...pendingItem,description: descEvt.target.value})} />
                 </div>  
             </div>
-            <button type="submit" onClick={saveEvt => {dispatch(saveTodoAsync(pendingItem)); setPendingItem(defaultPending);}}>Save</button>
+            <button type="submit" onClick={saveEvt => {dispatch(saveTodoAsync({item:pendingItem, user: user.currentUser})); setPendingItem(defaultPending);}}>Save</button>
         </form>
     )
 }
