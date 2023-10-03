@@ -1,0 +1,27 @@
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 7.0.x
+    - name: list
+      shell: bash
+      run: ls
+    - name: Restore dependencies
+      run: dotnet restore ./Auth/AuthServer.csproj
+    - name: Build
+      run: dotnet publish --no-restore ./Auth/AuthServer.csproj -o ./Auth/dist
+    - name: Archive build
+      uses: actions/upload-artifact@v3
+      with:
+        name: auth-build
+        path: ./Auth/dist

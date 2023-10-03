@@ -1,0 +1,23 @@
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 7.0.x
+    - name: Restore dependencies
+      run: dotnet restore ./Server/OrganizeApi.csproj
+    - name: Build
+      run: dotnet publish --no-restore ./Server/OrganizeApi.csproj -o ./Server/dist
+    - name: Archive build
+      uses: actions/upload-artifact@v3
+      with:
+        name: organize-build
+        path: ./Server/dist
+    
