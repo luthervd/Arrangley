@@ -1,0 +1,37 @@
+on: 
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+env:
+  SSH_KEY: ${{ secrets.PRIVATE_KEY }}
+  APP_HOST: ${{ secrets.HOST }}
+jobs:
+  deployment_job:
+    runs-on: ubuntu-latest
+    name: Deployment Job
+    environment: prod
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16
+    
+    - name: yarn install, build, and test
+      run: |
+        cd ./UI
+        yarn install 
+        yarn run build
+     
+    - name: Ssh and copy
+      run: |
+         eval $(ssh-agent -s)
+         echo "$SSH_KEY" | ssh-add -
+         mkdir -p ~/.ssh
+         chmod 700 ~/.ssh
+         zip -r build.zip ./UI/build
+         scp -o StrictHostKeyChecking=no build.zip luke@"$HOST":./build.zip
+         ssh -o StrictHostKeyChecking=no luke@"$HOST" "cd ~; rm -r ./UI; unzip ./build.zip -d ./; sudo rm -r /srv/www/organizelyui/ ; sudo rsync -a ./UI/build/ /srv/www/organizelyui/"
