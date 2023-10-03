@@ -20,12 +20,12 @@ jobs:
       run: dotnet publish --no-restore ./Server/OrganizeApi.csproj -o ./Server/dist
     - name: Zip
         run: zip -r serverbuild.zip ./Server/dist
-          - name: Push to host
+    - name: Push to host
         run: |
           eval $(ssh-agent -s)
           echo "$SSH_KEY" | ssh-add -
           mkdir -p ~/.ssh
           chmod 700 ~/.ssh
-          scp -o StrictHostKeyChecking=no build.zip luke@"$APP_HOST":./serverbuild.zip
+          scp -o StrictHostKeyChecking=no serverbuild.zip luke@"$APP_HOST":./serverbuild.zip
           ssh -o StrictHostKeyChecking=no luke@"$APP_HOST" "cd ~; rm -r ./serverbuild; unzip ./serverbuild.zip -d ./;"
     

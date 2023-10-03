@@ -27,6 +27,6 @@ jobs:
           echo "$SSH_KEY" | ssh-add -
           mkdir -p ~/.ssh
           chmod 700 ~/.ssh
-          scp -o StrictHostKeyChecking=no build.zip luke@"$APP_HOST":./authbuild.zip
+          scp -o StrictHostKeyChecking=no authbuild.zip luke@"$APP_HOST":./authbuild.zip
           ssh -o StrictHostKeyChecking=no luke@"$APP_HOST" "cd ~; rm -r ./auth; unzip ./authbuild.zip -d ./;"
         
