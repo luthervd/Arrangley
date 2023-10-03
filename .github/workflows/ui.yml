@@ -33,5 +33,5 @@ jobs:
          mkdir -p ~/.ssh
          chmod 700 ~/.ssh
          zip -r build.zip ./UI/build
-         scp -o StrictHostKeyChecking=no build.zip luke@"$HOST":./build.zip
-         ssh -o StrictHostKeyChecking=no luke@"$HOST" "cd ~; rm -r ./UI; unzip ./build.zip -d ./; sudo rm -r /srv/www/organizelyui/ ; sudo rsync -a ./UI/build/ /srv/www/organizelyui/"
+         scp -o StrictHostKeyChecking=no build.zip luke@"$APP_HOST":./build.zip
+         ssh -o StrictHostKeyChecking=no luke@"$APP_HOST" "cd ~; rm -r ./UI; unzip ./build.zip -d ./; sudo rm -r /srv/www/organizelyui/ ; sudo rsync -a ./UI/build/ /srv/www/organizelyui/"
