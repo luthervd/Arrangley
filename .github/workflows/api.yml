@@ -28,5 +28,5 @@ jobs:
           mkdir -p ~/.ssh
           chmod 700 ~/.ssh
           scp -o StrictHostKeyChecking=no serverbuild.zip luke@"$APP_HOST":./serverbuild.zip
-          ssh -o StrictHostKeyChecking=no luke@"$APP_HOST" "cd ~; rm -r ./serverbuild; unzip ./serverbuild.zip -d ./;"
+          ssh -o StrictHostKeyChecking=no luke@"$APP_HOST" "cd ~; rm -r ./Server; unzip ./serverbuild.zip -d ./;"
     
