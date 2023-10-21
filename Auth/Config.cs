@@ -40,9 +40,9 @@ public static class Config
                 AllowedGrantTypes = GrantTypes.Code,
 
                 RedirectUris = { "http://localhost:5003/callback", "http://arrangely.net/callback"},
-                FrontChannelLogoutUri = "http://localhost:5003/logout",
-                PostLogoutRedirectUris = { "http://localhost:5003/logout" },
-                AllowedCorsOrigins =     { "http://127.0.0.1:5003","http://localhost:5003" },
+                FrontChannelLogoutUri = "http://auth.arrangely.net/logout",
+                PostLogoutRedirectUris = { "http://auth.arrangely.net/logout" },
+                AllowedCorsOrigins =     { "http://127.0.0.1:5003","http://localhost:5003", "http://arrangely.net" },
 
                 AllowOfflineAccess = true,
                 AllowedScopes = { "openid", "profile", "arrangely" }

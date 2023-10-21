@@ -56,9 +56,13 @@ public class Index : PageModel
     {
         var userName = Request.Form["user"];
         var password = Request.Form["pword"];
-        var user = new ApplicationUser();
-        user.UserName = userName;
-        var saved = await _userManager.CreateAsync(user);
+        var user = new ApplicationUser
+        {
+            UserName = userName,
+            Email = "test@test.com",
+            EmailConfirmed = true
+        }
+        var saved = await _userManager.CreateAsync(user,password);
         var callback = Request.Cookies["callback"];
         if(callback == "local")
         {
