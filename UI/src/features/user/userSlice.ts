@@ -2,6 +2,8 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import { RootState } from "../../app/store"
 import { UserManager, User } from "oidc-client";
 
+const loginUrl = import.meta.env.VITE_LOGIN_URL;
+const siteUrl = import.meta.env.VITE_SITE_URL;
 
 export interface ICurrentUser {
     access_token: string,
@@ -64,12 +66,12 @@ export const userSlice = createSlice({
     reducers:{
         login: (state) => {
             var config = {
-                authority: "https://localhost:5001",
+                authority: loginUrl,
                 client_id: "arrangely",
-                redirect_uri: "http://localhost:5003/callback",
+                redirect_uri: siteUrl+"/callback",
                 response_type: "code",
-                scope:"openid profile arrangely",
-                post_logout_redirect_uri : "http://localhost:5003/logout",
+                scope: "openid profile arrangely",
+                post_logout_redirect_uri: loginUrl+"/logout",
             };
             let mgr = new UserManager(config);
             mgr.signinRedirect();
