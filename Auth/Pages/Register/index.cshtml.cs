@@ -61,7 +61,7 @@ public class Index : PageModel
             UserName = userName,
             Email = "test@test.com",
             EmailConfirmed = true
-        }
+        };
         var saved = await _userManager.CreateAsync(user,password);
         var callback = Request.Cookies["callback"];
         if(callback == "local")
