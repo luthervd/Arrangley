@@ -40,8 +40,34 @@ public class Index : PageModel
         
     public async Task<IActionResult> OnGet()
     {
-        
+        var callBack = Request.Query["callback"];
+        if(string.IsNullOrEmpty(callBack))
+        {
+            callBack = "local";
+        }
+        var options = new CookieOptions();
+        options.Expires = DateTime.Now.AddMinutes(10);
+        options.HttpOnly = true;
+        Response.Cookies.Append("callback",callBack,options);
         return Page();
+    }
+
+    public async Task<IActionResult> OnPostAsync()
+    {
+        var userName = Request.Form["user"];
+        var password = Request.Form["pword"];
+        var user = new ApplicationUser();
+        user.UserName = userName;
+        var saved = await _userManager.CreateAsync(user);
+        var callback = Request.Cookies["callback"];
+        if(callback == "local")
+        {
+            return RedirectToPage("registered");
+        }
+        else
+        {
+            return Redirect(callback);
+        }
     }
         
 }
