@@ -28,7 +28,7 @@ internal static class HostingExtensions
                 options.Events.RaiseInformationEvents = true;
                 options.Events.RaiseFailureEvents = true;
                 options.Events.RaiseSuccessEvents = true;
-
+                
                 // see https://docs.duendesoftware.com/identityserver/v6/fundamentals/resources/
                 options.EmitStaticAudienceClaim = true;
             })
@@ -52,7 +52,7 @@ internal static class HostingExtensions
         builder.Services.AddCors(options => {
             options.AddPolicy("default", policy =>
             {
-                policy.WithOrigins("https://localhost:5003", "http://localhost:5003", "http://127.0.0.1:5003", "http://arrangely.net")
+                policy.WithOrigins("https://localhost:5003", "http://localhost:5003", "http://127.0.0.1:5003", "https://arrangely.net")
                     .AllowAnyHeader()
                     .AllowAnyMethod();
             });

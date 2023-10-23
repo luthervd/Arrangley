@@ -1,4 +1,5 @@
 ﻿using IdentityServerAspNetIdentity;
+using Microsoft.AspNetCore.CookiePolicy;
 using Serilog;
 
 Log.Logger = new LoggerConfiguration()
@@ -29,7 +30,12 @@ try
         Log.Information("Done seeding database. Exiting.");
         return;
     }
-
+    app.UseCookiePolicy(new CookiePolicyOptions
+    {
+        HttpOnly = HttpOnlyPolicy.None,
+        MinimumSameSitePolicy = SameSiteMode.None,
+        Secure = CookieSecurePolicy.Always
+    });
     app.Run();
 }
 catch (Exception ex) when (

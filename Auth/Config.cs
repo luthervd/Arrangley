@@ -39,10 +39,10 @@ public static class Config
 
                 AllowedGrantTypes = GrantTypes.Code,
 
-                RedirectUris = { "https://arrangely.net/callback"},
+                RedirectUris = { "http://localhost:5003/callback", "https://arrangely.net/callback"},
                 FrontChannelLogoutUri = "https://auth.arrangely.net/logout",
                 PostLogoutRedirectUris = { "https://auth.arrangely.net/logout" },
-                AllowedCorsOrigins =     { "https://arrangely.net" },
+                AllowedCorsOrigins =     { "http://127.0.0.1:5003","http://localhost:5003", "https://arrangely.net" },
 
                 AllowOfflineAccess = true,
                 AllowedScopes = { "openid", "profile", "arrangely" }
