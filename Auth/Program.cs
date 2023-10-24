@@ -15,8 +15,9 @@ try
     builder.Services.Configure<ForwardedHeadersOptions>(options =>
     {
         options.ForwardedHeaders =
-            ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+            ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto | ForwardedHeaders.XForwardedHost;
     });
+
     builder.Host.UseSerilog((ctx, lc) => lc
         .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}")
         .Enrich.FromLogContext()
@@ -35,6 +36,13 @@ try
         Log.Information("Done seeding database. Exiting.");
         return;
     }
+    var fordwardedHeaderOptions = new ForwardedHeadersOptions
+    {
+        ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto | ForwardedHeaders.XForwardedHost
+    };
+    fordwardedHeaderOptions.KnownNetworks.Clear();
+    fordwardedHeaderOptions.KnownProxies.Clear();
+    app.UseForwardedHeaders(fordwardedHeaderOptions);
     app.UseCookiePolicy(new CookiePolicyOptions
     {
         HttpOnly = HttpOnlyPolicy.None,
