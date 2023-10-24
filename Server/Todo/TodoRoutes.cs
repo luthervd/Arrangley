@@ -7,9 +7,11 @@ public static class TodoRoutes
 {
     public static void AddTodoRoutes(this WebApplication app)
     {
+        
         app.MapGet("/todo", async (TodoContext context) => await context.TodoItems.ToListAsync())
             .WithName("GetTodoItems")
-            .WithOpenApi();
+            .WithOpenApi()
+            .RequireAuthorization("user");
         
         app.MapPost("/todo", async (HttpContext context, TodoContext dbContext, TodoItem todoItem) =>
         {
@@ -27,6 +29,7 @@ public static class TodoRoutes
             }
         })
         .WithName("CreateTodoItem")
+        .RequireAuthorization("user")
         .WithOpenApi();
         
         app.MapPatch("/todo/{id}", async (HttpContext httpContext, IJsonPatchHandler handler, int id, JsonPatch<TodoItem> patch, TodoContext context) =>
@@ -43,7 +46,8 @@ public static class TodoRoutes
             httpContext.Response.StatusCode = 200;
         })
         .WithName("PatchTodoItem")
-        .WithOpenApi();
+        .WithOpenApi()
+        .RequireAuthorization("user");
 
         app.MapDelete("/todo/{id}", async (HttpContext context, int id, TodoContext dbContext) =>
         {
@@ -60,7 +64,8 @@ public static class TodoRoutes
             }
         })
         .WithName("DeleteTodoItem")
-        .WithOpenApi();
+        .WithOpenApi()
+        .RequireAuthorization("user");
 
     }
     

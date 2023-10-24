@@ -40,6 +40,7 @@ const initialState = createInitialState();
 
 export const readUserAsync = createAsyncThunk("user/read",
 async ():Promise<ICurrentUser> => {
+        
         let mgr = new UserManager({response_mode: "query"});
         let user = await mgr.signinRedirectCallback();
         return {

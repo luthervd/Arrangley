@@ -1,4 +1,5 @@
 ﻿using Duende.IdentityServer.Models;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace IdentityServerAspNetIdentity;
 
@@ -45,7 +46,8 @@ public static class Config
                 AllowedCorsOrigins =     { "http://127.0.0.1:5003","http://localhost:5003", "https://arrangely.net" },
 
                 AllowOfflineAccess = true,
-                AllowedScopes = { "openid", "profile", "arrangely" }
+                AllowedScopes = { "openid", "profile", "arrangely" },
+                
             },
         };
 }
