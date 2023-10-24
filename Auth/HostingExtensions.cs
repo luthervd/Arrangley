@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Npgsql.EntityFrameworkCore.PostgreSQL;
+using Microsoft.AspNetCore.CookiePolicy;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace IdentityServerAspNetIdentity;
 
@@ -62,7 +64,15 @@ internal static class HostingExtensions
     }
     
     public static WebApplication ConfigurePipeline(this WebApplication app)
-    { 
+    {
+        var fordwardedHeaderOptions = new ForwardedHeadersOptions
+        {
+            ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto | ForwardedHeaders.XForwardedHost
+        };
+        fordwardedHeaderOptions.KnownNetworks.Clear();
+        fordwardedHeaderOptions.KnownProxies.Clear();
+        app.UseForwardedHeaders(fordwardedHeaderOptions);
+        
         app.UseSerilogRequestLogging();
     
         if (app.Environment.IsDevelopment())
@@ -78,7 +88,12 @@ internal static class HostingExtensions
         
         app.MapRazorPages()
             .RequireAuthorization();
-
+        app.UseCookiePolicy(new CookiePolicyOptions
+        {
+            HttpOnly = HttpOnlyPolicy.None,
+            MinimumSameSitePolicy = SameSiteMode.None,
+            Secure = CookieSecurePolicy.Always
+        });
         return app;
     }
 }
