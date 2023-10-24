@@ -1,5 +1,6 @@
 ﻿using IdentityServerAspNetIdentity;
 using Microsoft.AspNetCore.CookiePolicy;
+using Microsoft.AspNetCore.HttpOverrides;
 using Serilog;
 
 Log.Logger = new LoggerConfiguration()
