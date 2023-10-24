@@ -36,19 +36,7 @@ try
         Log.Information("Done seeding database. Exiting.");
         return;
     }
-    var fordwardedHeaderOptions = new ForwardedHeadersOptions
-    {
-        ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto | ForwardedHeaders.XForwardedHost
-    };
-    fordwardedHeaderOptions.KnownNetworks.Clear();
-    fordwardedHeaderOptions.KnownProxies.Clear();
-    app.UseForwardedHeaders(fordwardedHeaderOptions);
-    app.UseCookiePolicy(new CookiePolicyOptions
-    {
-        HttpOnly = HttpOnlyPolicy.None,
-        MinimumSameSitePolicy = SameSiteMode.None,
-        Secure = CookieSecurePolicy.Always
-    });
+   
     app.Run();
 }
 catch (Exception ex) when (
