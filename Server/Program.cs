@@ -1,6 +1,7 @@
 using OrganizeApi.Extensions;
 using OrganizeApi.Todo;
-
+using IdentityModel.Client;
+using System.Security.Claims;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.RegisterServices(builder.Configuration);
 builder.Services.AddEndpointsApiExplorer();
@@ -29,6 +30,26 @@ app.UseSwaggerUI();
 
 app.UseAuthentication();
 app.UseAuthorization();
-
+app.Use(async (context,next) => {
+    
+    if(context != null && context.User.Identity != null && context.User.Identity.IsAuthenticated){
+        var client = context.RequestServices.GetRequiredService<HttpClient>();
+        var token = context.Request.Headers.Authorization[0];
+        if(token != null){
+            token = token.Replace("Bearer ","");
+            var disco = await client.GetDiscoveryDocumentAsync("https://localhost:5001");
+            var response = await client.GetUserInfoAsync(new UserInfoRequest
+            {
+                Address = disco.UserInfoEndpoint,
+                Token = token
+            });
+            var identity = (ClaimsIdentity)context.User.Identity;
+            response.Claims.ToList().ForEach(claim => identity.AddClaim(claim));
+        }
+       
+        await next.Invoke(context);
+    }
+   
+});
 app.AddTodoRoutes();
 app.Run();

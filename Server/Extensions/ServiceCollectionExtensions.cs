@@ -16,45 +16,10 @@ public static class ServiceCollectionExtensions
         })
         .AddJwtBearer(options =>
         {
-            options.Events = new JwtBearerEvents()
-            {
-                OnMessageReceived = msg =>
-                {
-                    var token = msg?.Request.Headers.Authorization.ToString();
-                    string path = msg?.Request.Path ?? "";
-                    if (!string.IsNullOrEmpty(token))
-
-                    {
-                        Console.WriteLine("Access token");
-                        Console.WriteLine($"URL: {path}");
-                        Console.WriteLine($"Token: {token}\r\n");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Access token");
-                        Console.WriteLine("URL: " + path);
-                        Console.WriteLine("Token: No access token provided\r\n");
-                    }
-                    return Task.CompletedTask;
-                },
-                 OnTokenValidated = ctx =>
-                {
-                    Console.WriteLine();
-                    Console.WriteLine("Claims from the access token");
-                    if (ctx?.Principal != null)
-                    {
-                        foreach (var claim in ctx.Principal.Claims)
-                        {
-                            Console.WriteLine($"{claim.Type} - {claim.Value}");
-                        }
-                    }
-                    Console.WriteLine();
-                    return Task.CompletedTask;
-                }
-            };
             options.Authority = authAuthority ?? "https://auth.arrangely.net";
             options.IncludeErrorDetails = true;
             options.TokenValidationParameters.ValidateAudience = false;
+            
         });
 
         services.AddAuthorization(options =>
@@ -69,5 +34,6 @@ public static class ServiceCollectionExtensions
             options.UseNpgsql(config.GetConnectionString("TodoContext"));
         });
         services.AddSingleton<IJsonPatchHandler>(new JsonPatchHandler());
+        services.AddSingleton<HttpClient>(new HttpClient());
     }
 }

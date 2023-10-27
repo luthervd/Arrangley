@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
 using OrganizeApi.JsonPatch;
 
 namespace OrganizeApi.Todo;
@@ -8,13 +9,23 @@ public static class TodoRoutes
     public static void AddTodoRoutes(this WebApplication app)
     {
         
-        app.MapGet("/todo", async (TodoContext context) => await context.TodoItems.ToListAsync())
+        app.MapGet("/todo", async (HttpContext context,TodoContext todoContext) =>
+        {
+            var identity = (ClaimsIdentity)context.User.Identity;
+            var userClaim = identity.Claims.FirstOrDefault(x => x.Type == "sub");
+            var userHash = userClaim.Value;
+            var items = await todoContext.TodoItems.Where(x => x.UserHash == userHash).ToListAsync();
+            return items;
+        })
             .WithName("GetTodoItems")
             .WithOpenApi()
             .RequireAuthorization("user");
         
         app.MapPost("/todo", async (HttpContext context, TodoContext dbContext, TodoItem todoItem) =>
         {
+            var identity = (ClaimsIdentity)context.User.Identity;
+            var userClaim = identity.Claims.FirstOrDefault(x => x.Type == "sub");
+            todoItem.UserHash = userClaim.Value;
             dbContext.TodoItems.Add(todoItem);
             var result = await dbContext.SaveChangesAsync();
             if (result == 1)
