@@ -37,7 +37,8 @@ app.Use(async (context,next) => {
         var token = context.Request.Headers.Authorization[0];
         if(token != null){
             token = token.Replace("Bearer ","");
-            var disco = await client.GetDiscoveryDocumentAsync("https://localhost:5001");
+            var authAuthority = context.RequestServices.GetRequiredService<IConfiguration>()["AuthAuthority"];
+            var disco = await client.GetDiscoveryDocumentAsync(authAuthority ?? "https://auth.arrangely.net");
             var response = await client.GetUserInfoAsync(new UserInfoRequest
             {
                 Address = disco.UserInfoEndpoint,
