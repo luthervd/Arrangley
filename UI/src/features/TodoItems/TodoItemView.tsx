@@ -42,9 +42,12 @@ export default function TodoItemView(props: { item: TodoItem }){
                     <section>
                         <label>{dueMessage}</label>
                     </section>
-                    <button className="button" onClick={evt => dispatch(deleteTodoAsync({itemId: props.item.id ?? 0, user: userState.currentUser}))}>Delete</button>
                 </div>
             </div>
+            <footer className="card-footer">
+                <a href="#" className="card-footer-item" >Edit</a>
+                <a href="#" className="card-footer-item" onClick={evt => dispatch(deleteTodoAsync({itemId: props.item.id ?? 0, user: userState.currentUser}))}>Delete</a>
+            </footer>
         </div>
     )
 }

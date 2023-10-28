@@ -6,25 +6,28 @@ import { getUserState } from '../user/userSlice';
 import { Login } from '../user/login';
 
 export function ViewManager(props: any){
-    
-    const userState = useAppSelector(getUserState);
     const mItem = useAppSelector(selectedMenuItem);
-
 
     function viewRender()
     {
-        if(!userState.isLoggedIn){
+        if(!props.userState){
+            <div>No User</div>
+        }
+        else if(!props.userState.isLoggedIn){
             return <Login />
         }
-        switch(mItem)
-        {
-            case menuItems.createItem:
-                return <CreateItem />
-                break;
-            case menuItems.tasks:
-                return <TodoItems />
-                break;
+        else{
+            switch(mItem)
+            {
+                case menuItems.createItem:
+                    return <CreateItem />
+                    break;
+                case menuItems.tasks:
+                    return <TodoItems />
+                    break;
+            }
         }
+       
     }
    
     return(

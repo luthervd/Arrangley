@@ -19,7 +19,7 @@ function App() {
           {user.isLoggedIn ? <Menu /> : null}    
         </div>
         <div className="column right-section">
-          {<ViewManager />}
+          {<ViewManager userState={user}/>}
         </div>
       </div>
     </div>
