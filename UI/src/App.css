@@ -6,3 +6,10 @@
   padding-top: 25px;
   padding-left: 10px;
 }
+
+@media screen and (max-width: 48em){
+  .right-section{
+    padding: 0;
+  }
+
+}

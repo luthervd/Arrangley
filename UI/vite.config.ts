@@ -9,6 +9,7 @@ export default defineConfig({
     port: 5003
   },
   build: {
+    manifest: true,
     outDir: "build",
     sourcemap: true,
   },

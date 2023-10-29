@@ -1,22 +1,65 @@
 #items{
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
     padding: 25px;
 }
 
 .todo-item{
-    margin: 0 10px 0 10px;
+    margin-top: 10px;
+    margin-left: 10px;
+    min-width: 25%;
 }
 
+.todo-item-options{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.todo-option{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.todo-option label{
+    font-size: 12px;
+}
+
+.number-icon{
+    margin: 0 auto;
+    border: 1px solid black;
+    height: 35px;
+    width: 35px;
+    border-radius: 35px;
+    line-height: 35px;
+    text-align: center;
+}
+
+.card .card-header{
+    background-color: #333;
+}
+
+.card .card-header .card-header-title{
+    color: #ccc;
+}
 @media screen and (max-width: 48em){
     #items{
         display: flex;
         flex-direction: column;
-        padding: 25px;
+        padding: 5px;
     }
 
     .todo-item{
-        margin: 10px 10px 10px 10px;
+        margin-top: 10px;
+        margin-left: 0;
+    }
+
+    .todo-item-options{
+       padding: 15px;
     }
 }
 
