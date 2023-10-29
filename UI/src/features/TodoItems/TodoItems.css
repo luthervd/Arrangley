@@ -6,6 +6,11 @@
     padding: 25px;
 }
 
+.days-left{
+    padding: 5px 25px 5px 5px;
+    color: #ccc;
+}
+
 .todo-item{
     margin-top: 10px;
     margin-left: 10px;

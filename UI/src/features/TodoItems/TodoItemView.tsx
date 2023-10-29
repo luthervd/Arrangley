@@ -34,16 +34,20 @@ export default function TodoItemView(props: { item: TodoItem }){
         <div className="card todo-item">
             <header className="card-header">
                 <p className="card-header-title">{ props.item.name }</p>
+                <div className="days-left">
+                    <span className="fa-layers fa-fw fa-2x">
+                        <FontAwesomeIcon icon="calendar"/>
+                        <span className="fa-layers-text fa-inverse" data-fa-transform="shrink-8 down-3">{daysTillDue}</span>
+                    </span>
+                    <label>Days Left</label>
+                </div>
             </header>
             <div className="card-content">
                 <div className="content fa-3x">
                     <section className="todo-item-options">
-                        <div className="todo-option">
-                            <span className="fa-layers fa-fw">
-                                <FontAwesomeIcon icon="calendar"/>
-                                <span className="fa-layers-text fa-inverse" data-fa-transform="shrink-8 down-3">{daysTillDue}</span>
-                            </span>
-                            <label>Days Left</label>
+                    <div className="todo-option">
+                            <FontAwesomeIcon icon="arrow-up-right-from-square"/>
+                            <label>View</label>
                         </div>
                         <div className="todo-option">
                             <FontAwesomeIcon icon="edit"/>
