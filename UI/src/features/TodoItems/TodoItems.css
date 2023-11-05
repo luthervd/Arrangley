@@ -8,7 +8,26 @@
 
 .days-left{
     padding: 5px 25px 5px 5px;
-    color: #ccc;
+    text-align: center;
+    position: relative;
+}
+
+.days-left .counter{
+    
+    left: 40%;
+    bottom: 20px;
+    height: 50px;
+    width: 50px;
+    border-radius: 50px;
+    border: 3px solid black;
+    line-height: 44px;
+    z-index: 300;
+    background: white;
+    margin: 0 auto;
+}
+
+.days-left-icon {
+    color: rgb(128, 128, 216);
 }
 
 .todo-item{
@@ -24,25 +43,6 @@
     align-items: flex-start;
 }
 
-.todo-option{
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-}
-
-.todo-option label{
-    font-size: 12px;
-}
-
-.number-icon{
-    margin: 0 auto;
-    border: 1px solid black;
-    height: 35px;
-    width: 35px;
-    border-radius: 35px;
-    line-height: 35px;
-    text-align: center;
-}
 
 .card .card-header{
     background-color: #333;
@@ -51,6 +51,16 @@
 .card .card-header .card-header-title{
     color: #ccc;
 }
+
+.card .card-footer .card-footer-item label{
+   margin-left: 10px;
+   pointer-events: none;
+}
+
+.card .card-footer .card-footer-item:hover{
+  cursor: pointer;
+}
+
 @media screen and (max-width: 48em){
     #items{
         display: flex;

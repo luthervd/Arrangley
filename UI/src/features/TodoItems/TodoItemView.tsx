@@ -34,33 +34,27 @@ export default function TodoItemView(props: { item: TodoItem }){
         <div className="card todo-item">
             <header className="card-header">
                 <p className="card-header-title">{ props.item.name }</p>
-                <div className="days-left">
-                    <span className="fa-layers fa-fw fa-2x">
-                        <FontAwesomeIcon icon="calendar"/>
-                        <span className="fa-layers-text fa-inverse" data-fa-transform="shrink-8 down-3">{daysTillDue}</span>
-                    </span>
-                    <label>Days Left</label>
-                </div>
             </header>
             <div className="card-content">
-                <div className="content fa-3x">
-                    <section className="todo-item-options">
-                    <div className="todo-option">
-                            <FontAwesomeIcon icon="arrow-up-right-from-square"/>
-                            <label>View</label>
-                        </div>
-                        <div className="todo-option">
-                            <FontAwesomeIcon icon="edit"/>
-                            <label>Edit</label>
-                        </div>
-                        <div className="todo-option">
-                            <FontAwesomeIcon icon="circle-minus"/>
-                            <label>Delete</label>
-                        </div>
-                    </section>
+                <div className="days-left">
+                    <div className="counter">{daysTillDue}</div>
+                    <label className="days-left-text">Days Left</label>
                 </div>
             </div>
-            
+            <footer className="card-footer">
+                <div className="card-footer-item">
+                    <FontAwesomeIcon icon="arrow-up-right-from-square"/>
+                    <label>View</label>
+                </div>
+                <div className="card-footer-item">
+                    <FontAwesomeIcon icon="edit"/>
+                    <label>Edit</label>
+                </div>
+                <div className="card-footer-item" onClick={evt => dispatch(deleteTodoAsync({itemId: props.item.id ?? -1, user: userState.currentUser}))}>
+                    <FontAwesomeIcon icon="circle-minus"/>
+                    <label>Delete</label>
+                </div>
+            </footer>
         </div>
     )
 }
