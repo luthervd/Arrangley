@@ -34,9 +34,9 @@ jobs:
           mkdir -p ~/.ssh
           chmod 700 ~/.ssh
           scp -o StrictHostKeyChecking=no serverbuild.zip luke@"$APP_HOST":./serverbuild.zip
-          scp -o StrictHostKeyChecking=no migrations luke@"$APP_HOST":./migrations
+          scp -o StrictHostKeyChecking=no ./Server/efbundle luke@"$APP_HOST":./efbundle
           ssh -o StrictHostKeyChecking=no luke@"$APP_HOST" "cd ~; rm -r ./Server; unzip ./serverbuild.zip -d ./;"
-          ssh -o StrictHostKeyChecking=no luke@"$APP_HOST" "cd ~; chmod 777 migrations; ./migrations;"
+          ssh -o StrictHostKeyChecking=no luke@"$APP_HOST" "cd ~; chmod 777 efbundle; ./efbundle;"
 
           
       
