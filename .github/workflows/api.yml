@@ -38,7 +38,7 @@ jobs:
           scp -o StrictHostKeyChecking=no serverbuild.zip luke@"$APP_HOST":./serverbuild.zip
           scp -o StrictHostKeyChecking=no ./Server/efbundle luke@"$APP_HOST":./efbundle
           scp -o StrictHostKeyChecking=no ./serversetup.sh luke@"$APP_HOST":./serversetup.sh
-          ssh -o StrictHostKeyChecking=no luke@"$APP_HOST" "export DBP=${{ secrets.DBPASSWORD }};cd ~; chmod 777 serversetup.sh; ./serversetup.sh;"
+          ssh -o StrictHostKeyChecking=no luke@"$APP_HOST" "export DBPASSWORD=${{ secrets.DBPASSWORD }};cd ~; chmod 777 serversetup.sh; ./serversetup.sh;"
           ssh -o StrictHostKeyChecking=no luke@"$APP_HOST" "cd ~; ./efbundle;"
           
 
