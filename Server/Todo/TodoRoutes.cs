@@ -1,4 +1,6 @@
 ﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OrganizeApi.JsonPatch;
 
@@ -43,6 +45,22 @@ public static class TodoRoutes
         .RequireAuthorization("user")
         .WithOpenApi();
         
+        app.MapPut("/todo/{id}", async (HttpContext requestContext, int id, TodoItem item, TodoContext todoContext) => {
+            var currentItem = await todoContext.TodoItems.FirstOrDefaultAsync(x => x.Id == id);
+            if(currentItem == null){
+                await todoContext.TodoItems.AddAsync(item);
+            }
+            else{
+                currentItem.Due = item.Due;
+                currentItem.Description = item.Description;
+                currentItem.Label = item.Label;
+                currentItem.Name = item.Name;
+                
+            }
+            await todoContext.SaveChangesAsync();
+            return Results.Ok();
+        });
+
         app.MapPatch("/todo/{id}", async (HttpContext httpContext, IJsonPatchHandler handler, int id, JsonPatch<TodoItem> patch, TodoContext context) =>
         {
             var item = await context.TodoItems.FirstOrDefaultAsync(x => x.Id == id);

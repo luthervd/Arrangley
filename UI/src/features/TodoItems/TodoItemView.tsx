@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { deleteTodoAsync} from "./todoSlice";
 import { getUserState } from '../user/userSlice';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { selectMenuItem, menuItems} from '../menu/menuSlice';
 
 export default function TodoItemView(props: { item: TodoItem }){
 
@@ -34,7 +35,7 @@ export default function TodoItemView(props: { item: TodoItem }){
         <div className="card todo-item">
             <header className="card-header">
                 <p className="card-header-title">{ props.item.name }</p>
-                <span className="tag is-light">{props.item.label}</span>
+                <span className="tag is-light mt-3 mr-2">{props.item.label}</span>
             </header>
             <div className="card-content">
                 <div className="days-left">
@@ -47,7 +48,7 @@ export default function TodoItemView(props: { item: TodoItem }){
                     <FontAwesomeIcon icon="arrow-up-right-from-square"/>
                     <label>View</label>
                 </div>
-                <div className="card-footer-item">
+                <div className="card-footer-item" onClick={evt => dispatch(selectMenuItem({route: menuItems.editItem, args: props.item}))}>
                     <FontAwesomeIcon icon="edit"/>
                     <label>Edit</label>
                 </div>

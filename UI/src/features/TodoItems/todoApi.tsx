@@ -14,8 +14,10 @@ export async function fetchTodoLists(user: ICurrentUser) : Promise<TodoItem[]>{
 
 export async function saveTodoItem(item: TodoItem, user: ICurrentUser) : Promise<TodoItem>{
 
-    let result = await fetch(url,{
-        method: "POST",
+    let method = item.id !== null && item.id !== undefined ? "PUT" : "POST";
+    let route = method === "PUT" ? `${url}/${item.id}` : url;
+    let result = await fetch(route,{
+        method: method,
         body: JSON.stringify(item),
         headers: { "Content-Type": "application/json","Accepts": "application/json", "Authorization": `Bearer ${user.access_token}`}
     });

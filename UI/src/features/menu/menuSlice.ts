@@ -4,28 +4,33 @@ import { RootState } from "../../app/store"
 
 export const menuItems = {
     createItem: "createItem",
-    stats: "stats",
+    editItem: "editItem",
     tasks: "tasks"
 }
 
-export interface MeunItemState{
-    selectedItem: string
+export interface MenuItem{
+    route: string
+    args?: any
+}
+
+export interface MenuItemState{
+    routeValue: MenuItem
 }
 
 const initialState = {
-    selectedItem: "tasks"
-} as MeunItemState;
+    routeValue: {route: "tasks"}
+} as MenuItemState;
 
 export const menuSlice = createSlice({
     name: "menu",
     initialState,
     reducers: {
-        selectMenuItem : (state, action : { payload: string }) => {
-            state.selectedItem = action.payload;
+        selectMenuItem : (state, action : { payload: MenuItem }) => {
+            state.routeValue = action.payload;
         }
     }
 })
 
 export const { selectMenuItem } = menuSlice.actions;
-export const selectedMenuItem = (state: RootState) => state.menu.selectedItem;
+export const selectedMenuItem = (state: RootState) => state.menu.routeValue;
 export default menuSlice.reducer;

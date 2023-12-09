@@ -29,17 +29,13 @@ jobs:
           dotnet ef  migrations bundle --self-contained -r linux-x64
           cd ..
       - name: Push to host
-        
         run: |
           eval $(ssh-agent -s)
           echo "$SSH_KEY" | ssh-add -
           mkdir -p ~/.ssh
           chmod 700 ~/.ssh
-          scp -o StrictHostKeyChecking=no serverbuild.zip luke@"$APP_HOST":./serverbuild.zip
-          scp -o StrictHostKeyChecking=no ./Server/efbundle luke@"$APP_HOST":./efbundle
-          scp -o StrictHostKeyChecking=no ./serversetup.sh luke@"$APP_HOST":./serversetup.sh
+          scp -o StrictHostKeyChecking=no serverbuild.zip ./Server/efbundle ./serversetup.sh luke@"$APP_HOST":~
           ssh -o StrictHostKeyChecking=no luke@"$APP_HOST" "export DBPASSWORD='${{ secrets.DBPASSWORD }}';cd ~; chmod 777 serversetup.sh; ./serversetup.sh;"
-          ssh -o StrictHostKeyChecking=no luke@"$APP_HOST" "cd ~; ./efbundle;"
           
 
           

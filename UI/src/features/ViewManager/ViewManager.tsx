@@ -1,7 +1,7 @@
-import { useAppSelector, useAppDispatch } from "../../app/hooks";
+import { useAppSelector } from "../../app/hooks";
 import { selectedMenuItem, menuItems } from "../menu/menuSlice";
 import { TodoItems } from '../TodoItems/TodoItems';
-import { CreateItem } from '../TodoItems/CreateItem';
+import { TodoItemEdit } from '../TodoItems/TodoItemEdit';
 import { getUserState } from '../user/userSlice';
 import { Login } from '../user/login';
 
@@ -17,14 +17,14 @@ export function ViewManager(props: any){
             return <Login />
         }
         else{
-            switch(mItem)
+            switch(mItem.route)
             {
                 case menuItems.createItem:
-                    return <CreateItem />
-                    break;
+                    return <TodoItemEdit />
                 case menuItems.tasks:
                     return <TodoItems />
-                    break;
+                case menuItems.editItem:
+                    return <TodoItemEdit item={mItem.args}/>
             }
         }
        
