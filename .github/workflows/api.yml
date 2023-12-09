@@ -35,8 +35,9 @@ jobs:
           chmod 700 ~/.ssh
           scp -o StrictHostKeyChecking=no serverbuild.zip luke@"$APP_HOST":./serverbuild.zip
           scp -o StrictHostKeyChecking=no ./Server/efbundle luke@"$APP_HOST":./efbundle
-          ssh -o StrictHostKeyChecking=no luke@"$APP_HOST" "cd ~; rm -r ./Server; unzip ./serverbuild.zip -d ./;"
-          ssh -o StrictHostKeyChecking=no luke@"$APP_HOST" "cd ~; chmod 777 efbundle; ./efbundle;"
+          scp -o StrictHostKeyChecking=no ./serversetup.sh luke@"$APP_HOST":./serversetup.sh
+          ssh -o StrictHostKeyChecking=no luke@"$APP_HOST" "cd ~; chmod 777 serversetup.sh; ./serversetup.sh;"
+          ssh -o StrictHostKeyChecking=no luke@"$APP_HOST" "cd ~; ./efbundle;"
 
           
       
