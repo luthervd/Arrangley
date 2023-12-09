@@ -3,5 +3,6 @@ export interface TodoItem {
     name: string,
     description: string,
     created: string | null,
-    due: string | null
+    due: string | null,
+    label: string
 }

@@ -12,6 +12,13 @@ public class TodoContext : DbContext
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<TodoItem>().ToTable("TodoItem").HasKey(x => x.Id);
+        modelBuilder.Entity<TodoItem>()
+        .ToTable("TodoItem")
+        .HasKey(x => x.Id);
+
+         modelBuilder.Entity<TodoItem>()
+        .Property(x => x.Label)
+        .HasDefaultValue("Personal");
+    
     }
 }

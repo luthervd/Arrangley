@@ -21,6 +21,12 @@ jobs:
         run: dotnet publish --no-restore ./Server/OrganizeApi.csproj -o ./Server/dist
       - name: Zip
         run: zip -r serverbuild.zip ./Server/dist
+      - name: Build migrations
+        run: |
+          dotnet tool install dotnet-ef
+          cd ./Server
+          dotnet ef  migrations bundle --self-contained -r linux-x64
+          cd ..
       - name: Push to host
         run: |
           eval $(ssh-agent -s)
@@ -28,5 +34,11 @@ jobs:
           mkdir -p ~/.ssh
           chmod 700 ~/.ssh
           scp -o StrictHostKeyChecking=no serverbuild.zip luke@"$APP_HOST":./serverbuild.zip
+          scp -o StrictHostKeyChecking=no migrations luke@"$APP_HOST":./migrations
           ssh -o StrictHostKeyChecking=no luke@"$APP_HOST" "cd ~; rm -r ./Server; unzip ./serverbuild.zip -d ./;"
+          ssh -o StrictHostKeyChecking=no luke@"$APP_HOST" "cd ~; chmod 777 migrations; ./migrations;"
+
+          
+      
+
     

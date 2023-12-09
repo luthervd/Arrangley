@@ -34,6 +34,7 @@ export default function TodoItemView(props: { item: TodoItem }){
         <div className="card todo-item">
             <header className="card-header">
                 <p className="card-header-title">{ props.item.name }</p>
+                <span className="tag is-light">{props.item.label}</span>
             </header>
             <div className="card-content">
                 <div className="days-left">
