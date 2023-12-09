@@ -23,7 +23,7 @@ jobs:
         run: zip -r serverbuild.zip ./Server/dist
       - name: Build migrations
         run: |
-          dotnet tool install dotnet-ef
+          dotnet tool restore
           cd ./Server
           dotnet ef  migrations bundle --self-contained -r linux-x64
           cd ..
