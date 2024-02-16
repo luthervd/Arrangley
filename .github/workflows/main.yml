@@ -17,5 +17,5 @@ jobs:
         PR_NO: ${{ github.event.issue.number }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - id: 'print'
-      run: echo "::notice ${{ steps.get-branch.outputs.branch  }}
+      run: echo "::notice ${{ steps.get-branch.outputs.branch  }}"
       
