@@ -1,0 +1,21 @@
+name: branch-test
+
+on:
+  issue_comment:
+    types: [created]
+  workflow_dispatch:
+
+jobs:
+  ad-hoc: 
+    runs-on: ubuntu-latest
+    name: a test 
+    steps:
+    - id: 'get-branch'
+      run: echo ::set-output name=branch::$(gh pr view $PR_NO --repo $REPO --json headRefName --jq '.headRefName')
+      env:
+        REPO: ${{ github.repository }}
+        PR_NO: ${{ github.event.issue.number }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - id: 'print'
+      run: echo ${{ steps.get-branch.outputs.branch  }}
+      
