@@ -11,11 +11,11 @@ jobs:
     name: a test 
     steps:
     - id: 'get-branch'
-      run: echo ::set-output name=branch::$(gh pr view $PR_NO --repo $REPO --json headRefName --jq '.headRefName')
+      run: echo "{branch}={$(gh pr view $PR_NO --repo $REPO --json headRefName --jq '.headRefName')}" >> $GITHUB_OUTPUT
       env:
         REPO: ${{ github.repository }}
         PR_NO: ${{ github.event.issue.number }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - id: 'print'
-      run: echo ${{ steps.get-branch.outputs.branch  }}
+      run: echo "::notice ${{ steps.get-branch.outputs.branch  }}
       
