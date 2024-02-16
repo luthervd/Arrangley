@@ -16,7 +16,7 @@ jobs:
     - id: 'print-env'
       run: echo '${{ toJSON(github) }}'
     - id: 'get-branch'
-      run: echo "$(gh pr view 2 --repo $REPO --json headRefName --jq '.headRefName')"
+      run: echo "branch=$(gh pr view $PR_NO --repo $REPO --json headRefName --jq '.headRefName')" >> $GITHUB_OUTPUT
      
     - id: 'print'
       run: echo "::notice ${{ steps.get-branch.outputs.branch  }}"
