@@ -4,7 +4,10 @@ on:
   issue_comment:
     types: [created]
   workflow_dispatch:
-
+env:
+  REPO: ${{ github.repository }}
+  PR_NO: ${{ github.event.issue.number }}
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 jobs:
   ad-hoc: 
     runs-on: ubuntu-latest
@@ -13,11 +16,8 @@ jobs:
     - id: 'print-env'
       run: echo '${{ toJSON(github) }}'
     - id: 'get-branch'
-      run: echo "$(gh pr view 2 --repo luthervd/Arrangley --json headRefName --jq '.headRefName')"
-      env:
-        REPO: ${{ github.repository }}
-        PR_NO: ${{ github.event.issue.number }}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: echo "$(gh pr view 2 --repo $REPO --json headRefName --jq '.headRefName')"
+     
     - id: 'print'
       run: echo "::notice ${{ steps.get-branch.outputs.branch  }}"
       
