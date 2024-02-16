@@ -12,11 +12,11 @@ jobs:
     steps:
     - id: 'print-env'
       run: | 
-          echo "${GITHUB_HEAD_REF}"
-          echo "${GITHUB_REF}"
-          echo "${GITHUB_PATH}"
-          echo "${GITHUB_REF_NAME}"
-          echo "${GITHUB_REPOSITORY}"
+          echo "$GITHUB_HEAD_REF"
+          echo "$GITHUB_REF"
+          echo "$GITHUB_PATH"
+          echo "$GITHUB_REF_NAME"
+          echo "$GITHUB_REPOSITORY"
     - id: 'get-branch'
       run: echo "branch=$(gh pr view $PR_NO --repo $REPO --json headRefName --jq '.headRefName')" >> $GITHUB_OUTPUT
       env:
