@@ -11,7 +11,7 @@ jobs:
     name: a test 
     steps:
     - id: 'print-env'
-      run: echo "$GITHUB_CONTEXT"
+      run: echo '${{ toJSON(github) }}'
     - id: 'get-branch'
       run: echo "branch=$(gh pr view $PR_NO --repo $REPO --json headRefName --jq '.headRefName')" >> $GITHUB_OUTPUT
       env:
