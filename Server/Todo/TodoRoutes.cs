@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OrganizeApi.JsonPatch;
+using OrganizeApi.Todo;
+using OrganizeApi.CheckLists;
+using OrganizeApi.Data;
 
 namespace OrganizeApi.Todo;
 
@@ -19,9 +22,9 @@ public static class TodoRoutes
             var items = await todoContext.TodoItems.Where(x => x.UserHash == userHash).ToListAsync();
             return items;
         })
-            .WithName("GetTodoItems")
-            .WithOpenApi()
-            .RequireAuthorization("user");
+        .WithName("GetTodoItems")
+        .WithOpenApi()
+        .RequireAuthorization("user");
         
         app.MapPost("/todo", async (HttpContext context, TodoContext dbContext, TodoItem todoItem) =>
         {

@@ -44,13 +44,9 @@ export default function TodoItemView(props: { item: TodoItem }){
                 </div>
             </div>
             <footer className="card-footer">
-                <div className="card-footer-item">
+                <div className="card-footer-item" onClick={evt => dispatch(selectMenuItem({route: menuItems.editItem, args: props.item}))}>
                     <FontAwesomeIcon icon="arrow-up-right-from-square"/>
                     <label>View</label>
-                </div>
-                <div className="card-footer-item" onClick={evt => dispatch(selectMenuItem({route: menuItems.editItem, args: props.item}))}>
-                    <FontAwesomeIcon icon="edit"/>
-                    <label>Edit</label>
                 </div>
                 <div className="card-footer-item" onClick={evt => dispatch(deleteTodoAsync({itemId: props.item.id ?? -1, user: userState.currentUser}))}>
                     <FontAwesomeIcon icon="circle-minus"/>

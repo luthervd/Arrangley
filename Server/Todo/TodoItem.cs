@@ -1,4 +1,5 @@
-﻿namespace OrganizeApi.Todo;
+﻿using OrganizeApi.CheckLists;
+namespace OrganizeApi.Todo;
 
 public class TodoItem
 {
@@ -17,6 +18,8 @@ public class TodoItem
     public string Label {get; set; } = "Personal";
     
     public bool IsComplete { get; set; }
+    
+    public virtual CheckList? CheckList { get; set; }
 
     public DateTime Created
     {
