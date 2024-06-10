@@ -2,6 +2,8 @@ using OrganizeApi.Extensions;
 using OrganizeApi.Todo;
 using IdentityModel.Client;
 using System.Security.Claims;
+using OrganizeApi.CheckLists;
+
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.RegisterServices(builder.Configuration);
 builder.Services.AddEndpointsApiExplorer();
@@ -53,4 +55,5 @@ app.Use(async (context,next) => {
    
 });
 app.AddTodoRoutes();
+app.AddCheckListRoutes();
 app.Run();

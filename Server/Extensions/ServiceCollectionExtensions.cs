@@ -3,6 +3,8 @@ using OrganizeApi.Todo;
 using OrganizeApi.JsonPatch;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using OrganizeApi.CheckLists;
+using OrganizeApi.Data;
 
 namespace OrganizeApi.Extensions;
 
@@ -35,5 +37,6 @@ public static class ServiceCollectionExtensions
         });
         services.AddSingleton<IJsonPatchHandler>(new JsonPatchHandler());
         services.AddSingleton<HttpClient>(new HttpClient());
+        services.AddScoped<CheckListBuilder>();
     }
 }

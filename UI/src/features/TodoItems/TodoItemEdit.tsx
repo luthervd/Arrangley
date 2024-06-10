@@ -34,8 +34,8 @@ export function TodoItemEdit(props : {item? : TodoItem}){
                 </div>  
             </div>
             { editMode ? 
-                <button type="submit" onClick={saveEvt => {dispatch(saveTodoAsync({item:pendingItem, user: user.currentUser})); setPendingItem(defaultPending);}}>Save</button> : 
-                <button type="submit" onClick={saveEvt => {dispatch(saveTodoAsync({item:pendingItem, user: user.currentUser})); setPendingItem(defaultPending);}}>Update</button>
+                <button type="submit" onClick={saveEvt => {dispatch(saveTodoAsync({item:pendingItem, user: user.currentUser})); setPendingItem(defaultPending);}}>Update</button> : 
+                <button type="submit" onClick={saveEvt => {dispatch(saveTodoAsync({item:pendingItem, user: user.currentUser})); setPendingItem(defaultPending);}}>Create</button>
             }
         </form>
     )

@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using OrganizeApi.CheckLists;
+using OrganizeApi.Todo;
 
-namespace OrganizeApi.Todo;
+namespace OrganizeApi.Data;
 
 public class TodoContext : DbContext
 {
@@ -9,6 +11,8 @@ public class TodoContext : DbContext
     }
     
     public DbSet<TodoItem> TodoItems { get; set; }
+    
+    public DbSet<CheckList> CheckLists { get; set; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -19,6 +23,15 @@ public class TodoContext : DbContext
          modelBuilder.Entity<TodoItem>()
         .Property(x => x.Label)
         .HasDefaultValue("Personal");
-    
+         
+        modelBuilder.Entity<CheckList>()
+        .ToTable("Checklist")
+        .HasKey(cl => cl.Id);
+
+        modelBuilder.Entity<CheckList>()
+        .HasMany<TodoItem>(x => x.Items)
+        .WithOne(x => x.CheckList)
+        .IsRequired(false);
+
     }
 }
