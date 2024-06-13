@@ -22,13 +22,15 @@
     "@types/luxon": "^3.3.2",
     "bulma": "^0.9.4",
     "cross-env": "^7.0.3",
+    "global": "^4.4.0",
     "luxon": "^3.4.3",
     "oidc-client": "^1.11.5",
     "react": "^18.2.0",
     "react-datepicker": "^4.21.0",
     "react-dom": "^18.2.0",
     "react-fontawesome": "^1.7.1",
-    "react-redux": "^8.0.1"
+    "react-redux": "^8.0.1",
+    "yarn": "^1.22.22"
   },
   "devDependencies": {
     "@testing-library/dom": "^9.2.0",

@@ -33,5 +33,21 @@ public static class CheckListRoutes
                 return Results.Json(item);
             }
         });
+
+        webApp.MapPost("/checklist", async (HttpContext context, [FromServices]TodoContext dbContext, [FromBody]CheckList checkList) => {
+            var identity = (ClaimsIdentity)context.User.Identity;
+            var userClaim = identity.Claims.FirstOrDefault(x => x.Type == "sub");
+            var userHash = userClaim.Value;
+            checkList.UserHash = userHash;
+            var trackedCheckList = dbContext.CheckLists.Add(checkList);
+            await dbContext.SaveChangesAsync();
+            foreach(var item in checkList.Items!)
+            {
+                item.CheckList = trackedCheckList.Entity;
+                dbContext.TodoItems.Add(item);
+            }
+            await dbContext.SaveChangesAsync();
+            return checkList;
+        });
     }
 }

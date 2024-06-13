@@ -19,9 +19,8 @@ public static class ServiceCollectionExtensions
         .AddJwtBearer(options =>
         {
             options.Authority = authAuthority ?? "https://auth.arrangely.net";
+            options.Audience = "arrangely";
             options.IncludeErrorDetails = true;
-            options.TokenValidationParameters.ValidateAudience = false;
-            
         });
 
         services.AddAuthorization(options =>
