@@ -16,9 +16,7 @@ public static class TodoRoutes
         
         app.MapGet("/todo", async (HttpContext context,TodoContext todoContext) =>
         {
-            var identity = (ClaimsIdentity)context.User.Identity;
-            var userClaim = identity.Claims.FirstOrDefault(x => x.Type == "sub");
-            var userHash = userClaim.Value;
+            var userHash = context.User.FindFirstValue(ClaimTypes.NameIdentifier);           
             var items = await todoContext.TodoItems.Where(x => x.UserHash == userHash).ToListAsync();
             return items;
         })
