@@ -13,23 +13,19 @@ public static class ServiceCollectionExtensions
     public static void RegisterServices(this IServiceCollection services, IConfiguration config)
     {
         var authAuthority = config["AuthAuthority"];
-        services.AddAuthentication(opts =>{
-             opts.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-        })
-        .AddJwtBearer(options =>
-        {
-            options.Authority = authAuthority ?? "https://auth.arrangely.net";
-            options.Audience = "arrangely";
-            options.IncludeErrorDetails = true;
+        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+        .AddJwtBearer(opts => {
+            opts.IncludeErrorDetails = true;
         });
 
         services.AddAuthorization(options =>
-        options.AddPolicy("user", policy =>
-        {
-            policy.RequireAuthenticatedUser();
-            policy.RequireClaim("scope", "arrangely");
-        })
-);
+            options.AddPolicy("user", policy =>
+            {
+                policy.RequireAuthenticatedUser();
+                policy.RequireClaim("scope", "arrangely");
+            })
+        );
+        
         services.AddDbContext<TodoContext>(options =>
         {
             options.UseNpgsql(config.GetConnectionString("TodoContext"));

@@ -4,11 +4,12 @@ using IdentityModel.Client;
 using System.Security.Claims;
 using Microsoft.OpenApi.Models;
 using OrganizeApi.CheckLists;
+using Microsoft.IdentityModel.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.RegisterServices(builder.Configuration);
 builder.Services.AddEndpointsApiExplorer();
-
+IdentityModelEventSource.ShowPII = true;
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("all",
@@ -62,7 +63,7 @@ app.UseSwaggerUI();
 
 app.UseAuthentication();
 app.UseAuthorization();
-app.Use(async (context,next) => {
+/*app.Use(async (context,next) => {
     
     if(context != null && context.User.Identity != null && context.User.Identity.IsAuthenticated){
         var client = context.RequestServices.GetRequiredService<HttpClient>();
@@ -83,7 +84,7 @@ app.Use(async (context,next) => {
         await next.Invoke(context);
     }
    
-});
+});*/
 app.AddTodoRoutes();
 app.AddCheckListRoutes();
 app.Run();
