@@ -16,6 +16,7 @@ public static class ServiceCollectionExtensions
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         .AddJwtBearer(opts => {
             opts.IncludeErrorDetails = true;
+            opts.MapInboundClaims = true;
         });
 
         services.AddAuthorization(options =>
