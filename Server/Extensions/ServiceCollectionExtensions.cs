@@ -19,12 +19,13 @@ public static class ServiceCollectionExtensions
         });
 
         services.AddAuthorization(options =>
-        options.AddPolicy("user", policy =>
-        {
-            policy.RequireAuthenticatedUser();
-            policy.RequireClaim("scope", "arrangely");
-        })
-);
+            options.AddPolicy("user", policy =>
+            {
+                policy.RequireAuthenticatedUser();
+                policy.RequireClaim("scope", "arrangely");
+            })
+        );
+        
         services.AddDbContext<TodoContext>(options =>
         {
             options.UseNpgsql(config.GetConnectionString("TodoContext"));
