@@ -33,5 +33,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IJsonPatchHandler>(new JsonPatchHandler());
         services.AddSingleton<HttpClient>(new HttpClient());
         services.AddScoped<CheckListBuilder>();
+        var authHost = config["Authentication:Schemes:Bearer:AuthAuthority"];
+        Console.WriteLine($"{authHost}");
     }
 }
