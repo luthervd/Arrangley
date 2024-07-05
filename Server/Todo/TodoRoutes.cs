@@ -27,7 +27,7 @@ public static class TodoRoutes
         app.MapPost("/todo", async (HttpContext context, TodoContext dbContext, TodoItem todoItem) =>
         {
             var identity = (ClaimsIdentity)context.User.Identity;
-            var userClaim = identity.Claims.FirstOrDefault(x => x.Type == "sub");
+            var userClaim = identity.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.NameIdentifier));
             todoItem.UserHash = userClaim.Value;
             dbContext.TodoItems.Add(todoItem);
             var result = await dbContext.SaveChangesAsync();

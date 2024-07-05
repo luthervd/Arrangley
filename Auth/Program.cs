@@ -1,5 +1,4 @@
 ﻿using IdentityServerAspNetIdentity;
-using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.AspNetCore.HttpOverrides;
 using Serilog;
 
