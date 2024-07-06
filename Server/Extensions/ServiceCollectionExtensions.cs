@@ -5,6 +5,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using OrganizeApi.CheckLists;
 using OrganizeApi.Data;
+using Microsoft.AspNetCore.Http.Json;
+using System.Text.Json.Serialization;
 
 namespace OrganizeApi.Extensions;
 
@@ -34,6 +36,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IJsonPatchHandler>(new JsonPatchHandler());
         services.AddSingleton<HttpClient>(new HttpClient());
         services.AddScoped<CheckListBuilder>();
+        services.Configure<JsonOptions>(x => x.SerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
         var authHost = config["Authentication:Schemes:Bearer:AuthAuthority"];
         Console.WriteLine($"{authHost}");
     }

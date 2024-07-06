@@ -4,6 +4,7 @@ import { TodoItems } from '../TodoItems/TodoItems';
 import { TodoItemEdit } from '../TodoItems/TodoItemEdit';
 import { getUserState } from '../user/userSlice';
 import { Login } from '../user/login';
+import { CheckListItemEdit } from "../CheckList/CheckListItemEdit";
 
 export function ViewManager(props: any){
     const mItem = useAppSelector(selectedMenuItem);
@@ -25,6 +26,8 @@ export function ViewManager(props: any){
                     return <TodoItems />
                 case menuItems.editItem:
                     return <TodoItemEdit item={mItem.args}/>
+                case menuItems.createCheckList:
+                    return <CheckListItemEdit item={mItem.args}/>
             }
         }
        

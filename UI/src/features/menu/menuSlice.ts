@@ -4,6 +4,7 @@ import { RootState } from "../../app/store"
 
 export const menuItems = {
     createItem: "createItem",
+    createCheckList: "createCheckList",
     editItem: "editItem",
     tasks: "tasks"
 }
