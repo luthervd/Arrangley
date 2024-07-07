@@ -9,10 +9,12 @@ public class CheckList
     public string Name { get; set; } = string.Empty;
 
     public string Description { get; set; } = string.Empty;
+
+    public string Label { get; set; } = string.Empty;
     
     public string UserHash { get; set; }  = string.Empty;
     
     
-    public virtual ICollection<TodoItem>? Items { get; set; }
+    public virtual ICollection<CheckListItem>? Items { get; set; }
     
 }

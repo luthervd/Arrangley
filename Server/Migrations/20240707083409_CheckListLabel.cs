@@ -5,13 +5,13 @@
 namespace OrganizeApi.Migrations
 {
     /// <inheritdoc />
-    public partial class AddUserHashToCheckList : Migration
+    public partial class CheckListLabel : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
-                name: "UserHash",
+                name: "Label",
                 table: "Checklist",
                 type: "text",
                 nullable: false,
@@ -22,7 +22,7 @@ namespace OrganizeApi.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "UserHash",
+                name: "Label",
                 table: "Checklist");
         }
     }

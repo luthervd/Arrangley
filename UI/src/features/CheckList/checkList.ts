@@ -1,8 +1,14 @@
-import { TodoItem } from "../TodoItems/todoItem";
+import { Settings } from "luxon";
+
+export interface CheckListItem {
+    name: string;
+    completed: boolean;
+}
 
 export interface CheckList {
     id: number,
     name: string,
     description: string,
-    items: TodoItem[]
+    label: string,
+    items: CheckListItem[]
 }

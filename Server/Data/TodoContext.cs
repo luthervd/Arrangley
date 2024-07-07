@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Text.Json;
+using Microsoft.EntityFrameworkCore;
 using OrganizeApi.CheckLists;
 using OrganizeApi.Todo;
 
@@ -28,10 +29,16 @@ public class TodoContext : DbContext
         .ToTable("Checklist")
         .HasKey(cl => cl.Id);
 
-        modelBuilder.Entity<CheckList>()
-        .HasMany<TodoItem>(x => x.Items)
-        .WithOne(x => x.CheckList)
-        .IsRequired(false);
+        modelBuilder
+        .Entity<CheckList>()
+        .Property(x => x.Items)
+        .HasColumnType("jsonb");
 
+        var jsonOptions = new JsonSerializerOptions();
+        modelBuilder
+        .Entity<CheckList>()
+        .Property(x => x.Items)
+        .HasConversion<string>(v => JsonSerializer.Serialize(v, jsonOptions), 
+                               v => JsonSerializer.Deserialize<List<CheckListItem>>(v, jsonOptions));
     }
 }

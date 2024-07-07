@@ -12,7 +12,7 @@ services:
     image: a-server
     environment:
       - ConnectionStrings__TodoContext=User ID=dev;Password=dev;Host=host.docker.internal;Port=5432;Database=organize;
-      - Authentication__Schemes__Bearer__ValidAudiences__0=http://localhost:5001/resources
+      - Authentication__Schemes__Bearer__ValidAudiences__0=http://localhost:5002/resources
       - Authentication__Schemes__Bearer__AuthAuthority=http://auth/resources
       - Authentication__Schemes__Bearer__MetaDataAddress=http://auth/.well-known/openid-configuration
       - Authentication__Schemes__Bearer__RequireHttpsMetaData=false

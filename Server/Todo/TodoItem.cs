@@ -19,7 +19,6 @@ public class TodoItem
     
     public bool IsComplete { get; set; }
     
-    public virtual CheckList? CheckList { get; set; }
 
     public DateTime Created
     {

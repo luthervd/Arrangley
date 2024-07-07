@@ -1,6 +1,6 @@
 import { useAppSelector } from "../../app/hooks";
 import { selectedMenuItem, menuItems } from "../menu/menuSlice";
-import { TodoItems } from '../TodoItems/TodoItems';
+import { ItemManager } from './ItemManager';
 import { TodoItemEdit } from '../TodoItems/TodoItemEdit';
 import { getUserState } from '../user/userSlice';
 import { Login } from '../user/login';
@@ -23,7 +23,7 @@ export function ViewManager(props: any){
                 case menuItems.createItem:
                     return <TodoItemEdit />
                 case menuItems.tasks:
-                    return <TodoItems />
+                    return <ItemManager />
                 case menuItems.editItem:
                     return <TodoItemEdit item={mItem.args}/>
                 case menuItems.createCheckList:

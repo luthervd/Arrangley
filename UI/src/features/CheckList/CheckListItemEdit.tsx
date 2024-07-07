@@ -6,13 +6,13 @@ import { CheckList } from './checkList';
 import { getUserState } from '../user/userSlice';
 
 
-const defaultPending = { name : "", description: "", items: [{name: "Item 1", isComplete: false, id: 0, label: "Personal"}], id: 0 } as CheckList;
+const defaultPending = { name : "", description: "", label: "Personal", items: [{name: "Item 1", completed: false }]} as CheckList;
 export function CheckListItemEdit(props: { item? : CheckList}){
     const editMode = props.item !== null && props.item !== undefined; 
     const [pendingItem, setPendingItem ] = useState<CheckList>(props.item ?? defaultPending);
     const user = useAppSelector(getUserState);
     const setLabel = (label: string) => {
-        pendingItem.items[0].label = label;
+        pendingItem.label = label;
         setPendingItem({...pendingItem});
     }
     const dispatch = useAppDispatch();

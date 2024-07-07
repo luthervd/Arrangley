@@ -42,15 +42,8 @@ public static class CheckListRoutes
             var identity = (ClaimsIdentity)context.User.Identity;
             var userClaim = identity.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.NameIdentifier));
             var userHash = userClaim.Value;
-            
             checkList.UserHash = userHash;
             var trackedCheckList = dbContext.CheckLists.Add(checkList);
-            await dbContext.SaveChangesAsync();
-            foreach(var item in checkList.Items!)
-            {
-                item.CheckList = trackedCheckList.Entity;
-                dbContext.TodoItems.Add(item);
-            }
             await dbContext.SaveChangesAsync();
             return checkList;
         });

@@ -39,13 +39,6 @@ internal class CheckListAggregate : ICheckListAggregate
         _pageSize = pageSize;
     }
     
-    internal CheckListAggregate(TodoContext context, string userHash, IEnumerable<TodoItem> items, int pageNumber = 0, int pageSize = 10)
-    {
-        _context = context;
-        _userHash = userHash;
-        _pageNumber = pageNumber; 
-        _pageSize = pageSize;
-    }
     
     public string UserHash => _userHash;
     
@@ -79,7 +72,6 @@ internal class CheckListAggregate : ICheckListAggregate
     {
         var items = await _context
             .CheckLists
-            .Include(x => x.Items)
             .Where(x => x.UserHash == _userHash)
             .Skip(_pageNumber * _pageSize)
             .Take(_pageSize)
