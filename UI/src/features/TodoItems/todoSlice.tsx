@@ -2,8 +2,6 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import { RootState } from "../../app/store"
 import { fetchTodoLists, saveTodoItem, deleteTodoItem } from "./todoApi";
 import { TodoItem } from "./todoItem";
-import { ICurrentUser } from "../user/userSlice";
-
 
 interface TodoItemsState {
     items: Array<TodoItem>
@@ -21,8 +19,8 @@ const initialState = {
 
 export const loadAsync = createAsyncThunk(
     "todo/fetchItems",
-    async (user: ICurrentUser) => {
-        const response = await fetchTodoLists(user);
+    async (arg: {token: string}) => {
+        const response = await fetchTodoLists(arg.token);
         // The value we return becomes the `fulfilled` action payload
         return response
     },
@@ -39,8 +37,8 @@ export const loadAsync = createAsyncThunk(
 
 export const saveTodoAsync = createAsyncThunk(
     "todo/saveItem",
-    async(arg: {item: TodoItem, user: ICurrentUser}) => {
-        const response = await saveTodoItem(arg.item, arg.user);
+    async(arg: {item: TodoItem, token: string}) => {
+        const response = await saveTodoItem(arg.item, arg.token);
         return response;
     },
     {
@@ -56,10 +54,10 @@ export const saveTodoAsync = createAsyncThunk(
 
 export const deleteTodoAsync  = createAsyncThunk(
     "todo/deleteItem",
-    async(arg: {itemId: number, user: ICurrentUser}, api)=> {
-        const isDeleted = await deleteTodoItem(arg.itemId, arg.user);
+    async(arg: {itemId: number, token: string}, api)=> {
+        const isDeleted = await deleteTodoItem(arg.itemId, arg.token);
         if(isDeleted){
-            api.dispatch(loadAsync(arg.user));
+            api.dispatch(loadAsync({token: arg.token}));
         }
         return isDeleted;
     }

@@ -2,14 +2,12 @@ import {TodoItem} from "./todoItem";
 import { DateTime } from "luxon";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { deleteTodoAsync} from "./todoSlice";
-import { getUserState } from '../user/userSlice';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { selectMenuItem, menuItems} from '../menu/menuSlice';
 
 export default function TodoItemView(props: { item: TodoItem }){
 
     const dispatch = useAppDispatch();
-    const userState = useAppSelector(getUserState);
     const created = DateTime.fromISO(props.item.created ?? "");
     const due = DateTime.fromISO(props.item.due ?? "");
 
@@ -48,7 +46,7 @@ export default function TodoItemView(props: { item: TodoItem }){
                     <FontAwesomeIcon icon="arrow-up-right-from-square"/>
                     <label>View</label>
                 </div>
-                <div className="card-footer-item" onClick={evt => dispatch(deleteTodoAsync({itemId: props.item.id ?? -1, user: userState.currentUser}))}>
+                <div className="card-footer-item" onClick={evt => dispatch(deleteTodoAsync({itemId: props.item.id ?? -1, token: ''}))}>
                     <FontAwesomeIcon icon="circle-minus"/>
                     <label>Delete</label>
                 </div>

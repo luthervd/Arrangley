@@ -2,14 +2,14 @@ import {TodoItem } from "../TodoItems/todoItem";
 import { CheckList, CheckListItem } from "./checkList";
 import { DateTime } from "luxon";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { getUserState } from '../user/userSlice';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { selectMenuItem, menuItems} from '../menu/menuSlice';
 
 export default function CheckListView(props: { item: CheckList }){
 
     const dispatch = useAppDispatch();
-    const userState = useAppSelector(getUserState);
+
     return (
         <div className="card todo-item">
             <header className="card-header">
