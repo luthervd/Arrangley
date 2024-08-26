@@ -1,7 +1,5 @@
 using OrganizeApi.Extensions;
 using OrganizeApi.Todo;
-using IdentityModel.Client;
-using System.Security.Claims;
 using Microsoft.OpenApi.Models;
 using OrganizeApi.CheckLists;
 using Microsoft.IdentityModel.Logging;

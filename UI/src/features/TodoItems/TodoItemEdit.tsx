@@ -3,15 +3,20 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { saveTodoAsync } from './todoSlice';
 import { TodoItem } from './todoItem';
 import { DateTime } from 'luxon';
-import { getUserState } from '../user/userSlice';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const defaultPending = {
     created: DateTime.now().toISO(), description: "", due: DateTime.now().plus({days: 7}).toISO(), name: "", label: "Personal"
 } as TodoItem;
+
+
 export function TodoItemEdit(props : {item? : TodoItem}){
+   
+        
+    
     const editMode = props.item !== null && props.item !== undefined;
     const [pendingItem, setPendingItem ] = useState<TodoItem>(props.item ?? defaultPending);
-    const user = useAppSelector(getUserState);
+    const {user} = useAuth0();
     const dispatch = useAppDispatch();
     return (
         <form className="form" onSubmit={evt => evt.preventDefault()}>
@@ -34,8 +39,8 @@ export function TodoItemEdit(props : {item? : TodoItem}){
                 </div>  
             </div>
             { editMode ? 
-                <button type="submit" onClick={saveEvt => {dispatch(saveTodoAsync({item:pendingItem, user: user.currentUser})); setPendingItem(defaultPending);}}>Update</button> : 
-                <button type="submit" onClick={saveEvt => {dispatch(saveTodoAsync({item:pendingItem, user: user.currentUser})); setPendingItem(defaultPending);}}>Create</button>
+                <button type="submit" onClick={saveEvt => {dispatch(saveTodoAsync({item:pendingItem,})); setPendingItem(defaultPending);}}>Update</button> : 
+                <button type="submit" onClick={saveEvt => {dispatch(saveTodoAsync({item:pendingItem,})); setPendingItem(defaultPending);}}>Create</button>
             }
         </form>
     )

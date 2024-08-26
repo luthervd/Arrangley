@@ -18,14 +18,13 @@ public static class ServiceCollectionExtensions
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         .AddJwtBearer(opts => {
             opts.IncludeErrorDetails = true;
-            opts.MapInboundClaims = true;
         });
 
         services.AddAuthorization(options =>
             options.AddPolicy("user", policy =>
             {
                 policy.RequireAuthenticatedUser();
-                policy.RequireClaim("scope", "arrangely");
+                policy.RequireClaim("permissions", "read:tasks");
             })
         );
         

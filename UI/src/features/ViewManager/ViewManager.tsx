@@ -2,19 +2,18 @@ import { useAppSelector } from "../../app/hooks";
 import { selectedMenuItem, menuItems } from "../menu/menuSlice";
 import { ItemManager } from './ItemManager';
 import { TodoItemEdit } from '../TodoItems/TodoItemEdit';
-import { getUserState } from '../user/userSlice';
 import { Login } from '../user/login';
+import { useAuth0 } from "@auth0/auth0-react";
 import { CheckListItemEdit } from "../CheckList/CheckListItemEdit";
 
 export function ViewManager(props: any){
     const mItem = useAppSelector(selectedMenuItem);
+    const { user, isAuthenticated, isLoading } = useAuth0();
+
 
     function viewRender()
-    {
-        if(!props.userState){
-            <div>No User</div>
-        }
-        else if(!props.userState.isLoggedIn){
+    {  
+        if(!isAuthenticated){
             return <Login />
         }
         else{

@@ -21,8 +21,8 @@ const initialState = {
 
 export const loadCheckListsAsync = createAsyncThunk(
     "checkList/fetchItems",
-    async (user: ICurrentUser) => {
-        const response = await fetchCheckLists(user);
+    async (arg: {token: string}) => {
+        const response = await fetchCheckLists(arg.token);
         // The value we return becomes the `fulfilled` action payload
         return response
     },
@@ -39,8 +39,8 @@ export const loadCheckListsAsync = createAsyncThunk(
 
 export const saveCheckListAsync = createAsyncThunk(
     "checkList/saveItem",
-    async(arg: {item: CheckList, user: ICurrentUser}) => {
-        const response = await saveCheckList(arg.item, arg.user);
+    async(arg: {item: CheckList, token: string}) => {
+        const response = await saveCheckList(arg.item, arg.token);
         return response;
     },
     {

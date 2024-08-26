@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import { selectTodoItems, loadAsync } from "../TodoItems/todoSlice";
 import { selectcheckListItems, loadCheckListsAsync } from "../CheckList/checkListSlice";
-import { getUserState } from '../user/userSlice';
+import { token } from "../user/tokenSlice";
 import TodoItemView from '../TodoItems/TodoItemView';
 import CheckListView from "../CheckList/CheckListItemView";
 import  './TodoItems.css';
@@ -12,11 +12,13 @@ export function ItemManager()
     const items = useAppSelector(selectTodoItems);    
     const checkLists = useAppSelector(selectcheckListItems);
     const dispatch = useAppDispatch();
-    const userState = useAppSelector(getUserState);
+    const accessToken = useAppSelector(token);
     useEffect(() => {
-        dispatch(loadAsync(userState.currentUser));
-        dispatch(loadCheckListsAsync(userState.currentUser));
-    },[]);
+        if(accessToken){
+            dispatch(loadAsync({token : accessToken }));
+            dispatch(loadCheckListsAsync({token : accessToken }));
+        }
+    },[accessToken]);
 
     return(
         <div id="items">

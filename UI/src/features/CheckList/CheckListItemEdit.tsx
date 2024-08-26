@@ -3,14 +3,14 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { saveCheckListAsync } from './checkListSlice';
 import { TodoItem  } from '../TodoItems/todoItem';
 import { CheckList } from './checkList';
-import { getUserState } from '../user/userSlice';
+import { useAuth0 } from '@auth0/auth0-react';
 
 
 const defaultPending = { name : "", description: "", label: "Personal", items: [{name: "Item 1", completed: false }]} as CheckList;
 export function CheckListItemEdit(props: { item? : CheckList}){
     const editMode = props.item !== null && props.item !== undefined; 
     const [pendingItem, setPendingItem ] = useState<CheckList>(props.item ?? defaultPending);
-    const user = useAppSelector(getUserState);
+    const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
     const setLabel = (label: string) => {
         pendingItem.label = label;
         setPendingItem({...pendingItem});
@@ -37,8 +37,8 @@ export function CheckListItemEdit(props: { item? : CheckList}){
                 </div>  
             </div>
             { editMode ? 
-                <button type="submit" onClick={saveEvt => {dispatch(saveCheckListAsync({item:pendingItem, user: user.currentUser})); setPendingItem(defaultPending);}}>Update</button> : 
-                <button type="submit" onClick={saveEvt => {dispatch(saveCheckListAsync({item:pendingItem, user: user.currentUser})); setPendingItem(defaultPending);}}>Create</button>
+                <button type="submit" onClick={saveEvt => {dispatch(saveCheckListAsync({item:pendingItem, user: user})); setPendingItem(defaultPending);}}>Update</button> : 
+                <button type="submit" onClick={saveEvt => {dispatch(saveCheckListAsync({item:pendingItem, user: user})); setPendingItem(defaultPending);}}>Create</button>
             }
         </form>
     )

@@ -1,24 +1,32 @@
 services:
-  auth:
-    image: a-auth
-    environment:
-      - ConnectionStrings__DefaultConnection=Server=host.docker.internal;Port=5432;Database=User;User Id=dev;Password=dev;
-    ports:
-      - 5002:80
-    extra_hosts:
-    - "host.docker.internal:host-gateway"
-  
   api:
     image: a-server
     environment:
-      - ConnectionStrings__TodoContext=User ID=dev;Password=dev;Host=host.docker.internal;Port=5432;Database=organize;
-      - Authentication__Schemes__Bearer__ValidAudiences__0=http://localhost:5002/resources
-      - Authentication__Schemes__Bearer__AuthAuthority=http://auth/resources
-      - Authentication__Schemes__Bearer__MetaDataAddress=http://auth/.well-known/openid-configuration
-      - Authentication__Schemes__Bearer__RequireHttpsMetaData=false
+      - ConnectionStrings__TodoContext=User ID=dev;Password=dev;Host=db;Port=5432;Database=arrangley;
+      - Authentication__Schemes__Bearer__ValidAudiences__0=https://arrangley.net
+      - Authentication__Schemes__Bearer__AuthAuthority=https://dev-e2wvf31xo6kxttv1.us.auth0.com/
+      - Authentication__Schemes__Bearer__MetaDataAddress=https://dev-e2wvf31xo6kxttv1.us.auth0.com/.well-known/openid-configuration
       - Authentication__Schemes__Bearer__GetClaimsFromUserInfoEndpoint=true
     ports:
       - 5001:8080
     extra_hosts:
     - "host.docker.internal:host-gateway"
+    
+  db:
+    image: postgres
+    container_name: db
+    restart: always
+    environment:
+      - POSTGRES_USER=dev
+      - POSTGRES_PASSWORD=dev
+      - POSTGRES_DB=arrangley
+    ports:
+      - 5432:5432
+    expose:
+      - "5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
 
