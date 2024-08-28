@@ -4,13 +4,14 @@ import { saveCheckListAsync } from './checkListSlice';
 import { TodoItem  } from '../TodoItems/todoItem';
 import { CheckList } from './checkList';
 import { useAuth0 } from '@auth0/auth0-react';
+import { token } from "../user/tokenSlice";
 
 
 const defaultPending = { name : "", description: "", label: "Personal", items: [{name: "Item 1", completed: false }]} as CheckList;
 export function CheckListItemEdit(props: { item? : CheckList}){
     const editMode = props.item !== null && props.item !== undefined; 
     const [pendingItem, setPendingItem ] = useState<CheckList>(props.item ?? defaultPending);
-    const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
+    const authToken = useAppSelector(token);
     const setLabel = (label: string) => {
         pendingItem.label = label;
         setPendingItem({...pendingItem});
@@ -27,7 +28,7 @@ export function CheckListItemEdit(props: { item? : CheckList}){
             <div className="field">
                 <label className="label">Label</label>
                 <div className="control">
-                    <input className="input" type='text' value={pendingItem.items[0].label} onChange={nameEvt => setLabel(nameEvt.target.value)} />
+                    <input className="input" type='text' value={pendingItem.items[0].name} onChange={nameEvt => setLabel(nameEvt.target.value)} />
                 </div>    
             </div>
             <div className="field">
@@ -37,8 +38,8 @@ export function CheckListItemEdit(props: { item? : CheckList}){
                 </div>  
             </div>
             { editMode ? 
-                <button type="submit" onClick={saveEvt => {dispatch(saveCheckListAsync({item:pendingItem, user: user})); setPendingItem(defaultPending);}}>Update</button> : 
-                <button type="submit" onClick={saveEvt => {dispatch(saveCheckListAsync({item:pendingItem, user: user})); setPendingItem(defaultPending);}}>Create</button>
+                <button type="submit" onClick={saveEvt => {dispatch(saveCheckListAsync({item:pendingItem, token : authToken})); setPendingItem(defaultPending);}}>Update</button> : 
+                <button type="submit" onClick={saveEvt => {dispatch(saveCheckListAsync({item:pendingItem, token: authToken})); setPendingItem(defaultPending);}}>Create</button>
             }
         </form>
     )

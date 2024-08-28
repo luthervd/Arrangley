@@ -2,7 +2,6 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import { RootState } from "../../app/store"
 import { fetchCheckLists, saveCheckList } from "./checkListApi";
 import { CheckList } from "./checkList";
-import { ICurrentUser } from "../user/userSlice";
 
 
 interface CheckListItemsState {
