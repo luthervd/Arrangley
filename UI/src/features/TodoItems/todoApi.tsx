@@ -24,7 +24,7 @@ export async function saveTodoItem(item: TodoItem, token: string) : Promise<Todo
 
 export async function deleteTodoItem(itemId: number, token: string) : Promise<boolean>{
   
-    let result = await fetch(`${url}/${itemId}`,{ method: "DELETE", headers: { "Content-Type": "application/json","Accepts": "application/json", "Authorization": `Bearer ${token}`}});
+    let result = await fetch(`${url}/todo/${itemId}`,{ method: "DELETE", headers: { "Content-Type": "application/json","Accepts": "application/json", "Authorization": `Bearer ${token}`}});
     return result.ok;
 }
 
