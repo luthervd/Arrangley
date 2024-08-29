@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { deleteTodoAsync} from "./todoSlice";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { selectMenuItem, menuItems} from '../menu/menuSlice';
+import { token} from '../user/tokenSlice';
 
 export default function TodoItemView(props: { item: TodoItem }){
 
@@ -18,6 +19,8 @@ export default function TodoItemView(props: { item: TodoItem }){
     const daysTillDue  = Math.floor(due.diff(now,["days"]).days);
 
     const createdMessage = daysSinceCreated < 1 ? "Created today" : `Created ${daysSinceCreated} days ago`;
+    
+    const authToken = useAppSelector(token);
 
     let dueMessage = "";
     if(daysTillDue < 0){
@@ -46,7 +49,7 @@ export default function TodoItemView(props: { item: TodoItem }){
                     <FontAwesomeIcon icon="arrow-up-right-from-square"/>
                     <label>View</label>
                 </div>
-                <div className="card-footer-item" onClick={evt => dispatch(deleteTodoAsync({itemId: props.item.id ?? -1, token: ''}))}>
+                <div className="card-footer-item" onClick={evt => dispatch(deleteTodoAsync({itemId: props.item.id ?? -1, token: authToken}))}>
                     <FontAwesomeIcon icon="circle-minus"/>
                     <label>Delete</label>
                 </div>
