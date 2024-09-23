@@ -35,14 +35,16 @@ export default function TodoItemView(props: { item: TodoItem }){
     return (
         <div className="card todo-item">
             <header className="card-header">
-                <p className="card-header-title">{ props.item.name }</p>
+                <p className="card-header-title"> 
+                    <div className="days-left">
+                        <div className="counter">{daysTillDue}</div>
+                    </div>
+                </p>
                 <span className="tag is-light mt-3 mr-2">{props.item.label}</span>
             </header>
             <div className="card-content">
-                <div className="days-left">
-                    <div className="counter">{daysTillDue}</div>
-                    <label className="days-left-text">Days Left</label>
-                </div>
+                <div>{ props.item.name }</div>
+                <p>{ props.item.description }</p>
             </div>
             <footer className="card-footer">
                 <div className="card-footer-item" onClick={evt => dispatch(selectMenuItem({route: menuItems.editItem, args: props.item}))}>
