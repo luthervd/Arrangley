@@ -43,7 +43,7 @@ export default function TodoItemView(props: { item: TodoItem }){
                 <span className="tag is-light mt-3 mr-2">{props.item.label}</span>
             </header>
             <div className="card-content">
-                <div>{ props.item.name }</div>
+                <h5>{ props.item.name }</h5>
                 <p>{ props.item.description }</p>
             </div>
             <footer className="card-footer">
