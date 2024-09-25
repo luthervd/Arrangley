@@ -5,6 +5,7 @@ import { deleteTodoAsync} from "./todoSlice";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { selectMenuItem, menuItems} from '../menu/menuSlice';
 import { token} from '../user/tokenSlice';
+import './TodoItems.css';
 
 export default function TodoItemView(props: { item: TodoItem }){
 
@@ -35,15 +36,15 @@ export default function TodoItemView(props: { item: TodoItem }){
     return (
         <div className="card todo-item">
             <header className="card-header">
-                <p className="card-header-title"> 
+                <div className="card-header-title"> 
                     <div className="days-left">
-                        <div className="counter">{daysTillDue}</div>
+                        <div className="counter">{daysTillDue}</div>  
                     </div>
-                </p>
+                    <div>{ props.item.name }</div>
+                </div>
                 <span className="tag is-light mt-3 mr-2">{props.item.label}</span>
             </header>
             <div className="card-content">
-                <h5>{ props.item.name }</h5>
                 <p>{ props.item.description }</p>
             </div>
             <footer className="card-footer">

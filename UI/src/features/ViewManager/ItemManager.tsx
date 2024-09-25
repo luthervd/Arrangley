@@ -5,7 +5,7 @@ import { selectcheckListItems, loadCheckListsAsync } from "../CheckList/checkLis
 import { token } from "../user/tokenSlice";
 import TodoItemView from '../TodoItems/TodoItemView';
 import CheckListView from "../CheckList/CheckListItemView";
-import  './TodoItems.css';
+import  './ItemManager.css';
 
 export function ItemManager()
 {
