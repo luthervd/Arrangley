@@ -1,29 +1,15 @@
-#items{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    padding: 25px;
-}
-
 .days-left{
-    padding: 5px 25px 5px 5px;
     text-align: center;
-    position: relative;
 }
 
 .days-left .counter{
-    
-    left: 40%;
-    bottom: 20px;
-    height: 50px;
-    width: 50px;
-    border-radius: 50px;
-    border: 3px solid black;
-    line-height: 44px;
-    z-index: 300;
+    height: 30px;
+    width: 30px;
+    border-radius: 20px;
+    color: black;
+    border: 1px solid rgb(255, 255, 255);
+    line-height: 25px;
     background: white;
-    margin: 0 auto;
 }
 
 .days-left-icon {
@@ -50,6 +36,14 @@
 
 .card .card-header .card-header-title{
     color: #ccc;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.card .card-header .card-header-title > * {
+    margin-right: 20px;
+    color: white;
 }
 
 .card .card-footer .card-footer-item label{
@@ -59,6 +53,10 @@
 
 .card .card-footer .card-footer-item:hover{
   cursor: pointer;
+}
+
+.card .card-content{
+    min-height: 25vh;
 }
 
 @media screen and (max-width: 48em){

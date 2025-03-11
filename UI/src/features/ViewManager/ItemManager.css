@@ -1,0 +1,11 @@
+#items{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    padding: 25px;
+}
+
+#items > *{
+    width: 45%;
+}
