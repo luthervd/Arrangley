@@ -43,6 +43,10 @@ export default function TodoItemView(props: { item: TodoItem }){
                     <div className="counter">{daysTillDue}</div>
                     <label className="days-left-text">Days Left</label>
                 </div>
+                <div >
+                    <label>Desctiption:</label>
+                    <p dangerouslySetInnerHTML={{ __html: props.item.description}}></p>
+                </div>
             </div>
             <footer className="card-footer">
                 <div className="card-footer-item" onClick={evt => dispatch(selectMenuItem({route: menuItems.editItem, args: props.item}))}>

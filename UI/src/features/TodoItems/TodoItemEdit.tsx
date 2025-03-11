@@ -5,6 +5,7 @@ import { TodoItem } from './todoItem';
 import { DateTime } from 'luxon';
 import { useAuth0 } from '@auth0/auth0-react';
 import { token } from '../user/tokenSlice';
+import Editor from 'react-simple-wysiwyg';
 
 const defaultPending = {
     created: DateTime.now().toISO(), description: "", due: DateTime.now().plus({days: 7}).toISO(), name: "", label: "Personal"
@@ -36,7 +37,7 @@ export function TodoItemEdit(props : {item? : TodoItem}){
             <div className="field">
                 <label className="label">Description</label>
                 <div className="control">
-                    <textarea className="textarea" value={pendingItem.description} onChange={descEvt => setPendingItem({...pendingItem,description: descEvt.target.value})} />
+                    <Editor value={pendingItem.description} onChange={descEvt => setPendingItem({...pendingItem,description: descEvt.target.value})} />
                 </div>  
             </div>
             { editMode ? 
