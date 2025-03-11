@@ -45,12 +45,8 @@ export default function TodoItemView(props: { item: TodoItem }){
                 <span className="tag is-light mt-3 mr-2">{props.item.label}</span>
             </header>
             <div className="card-content">
-                <div className="days-left">
-                    <div className="counter">{daysTillDue}</div>
-                    <label className="days-left-text">Days Left</label>
-                </div>
                 <div >
-                    <label>Desctiption:</label>
+                    <label>Description:</label>
                     <p dangerouslySetInnerHTML={{ __html: props.item.description}}></p>
                 </div>
             </div>
