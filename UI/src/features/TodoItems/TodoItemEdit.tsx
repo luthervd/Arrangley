@@ -4,7 +4,6 @@ import { saveTodoAsync } from './todoSlice';
 import { TodoItem } from './todoItem';
 import { DateTime } from 'luxon';
 import { useAuth0 } from '@auth0/auth0-react';
-import { token } from '../user/tokenSlice';
 import Editor from 'react-simple-wysiwyg';
 
 const defaultPending = {
@@ -15,7 +14,6 @@ const defaultPending = {
 export function TodoItemEdit(props : {item? : TodoItem}){
    
         
-    const authToken = useAppSelector(token);
     const editMode = props.item !== null && props.item !== undefined;
     const [pendingItem, setPendingItem ] = useState<TodoItem>(props.item ?? defaultPending);
     const {user} = useAuth0();
@@ -41,8 +39,8 @@ export function TodoItemEdit(props : {item? : TodoItem}){
                 </div>  
             </div>
             { editMode ? 
-                <button type="submit" onClick={saveEvt => {dispatch(saveTodoAsync({item:pendingItem, token: authToken})); setPendingItem(defaultPending);}}>Update</button> : 
-                <button type="submit" onClick={saveEvt => {dispatch(saveTodoAsync({item:pendingItem, token: authToken})); setPendingItem(defaultPending);}}>Create</button>
+                <button type="submit" onClick={saveEvt => {dispatch(saveTodoAsync({item:pendingItem})); setPendingItem(defaultPending);}}>Update</button> : 
+                <button type="submit" onClick={saveEvt => {dispatch(saveTodoAsync({item:pendingItem})); setPendingItem(defaultPending);}}>Create</button>
             }
         </form>
     )

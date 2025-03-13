@@ -56,10 +56,12 @@ public static class TodoRoutes
                 currentItem.Description = item.Description;
                 currentItem.Label = item.Label;
                 currentItem.Name = item.Name;
+                currentItem.Status = item.Status;
+                currentItem.IsComplete = item.Status != ItemStatus.Active;
                 
             }
             await todoContext.SaveChangesAsync();
-            return Results.Ok();
+            return Results.Ok(item);
         });
 
         app.MapPatch("/todo/{id}", async (HttpContext httpContext, IJsonPatchHandler handler, int id, JsonPatch<TodoItem> patch, TodoContext context) =>

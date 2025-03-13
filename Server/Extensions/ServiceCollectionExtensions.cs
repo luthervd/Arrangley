@@ -35,7 +35,11 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IJsonPatchHandler>(new JsonPatchHandler());
         services.AddSingleton<HttpClient>(new HttpClient());
         services.AddScoped<CheckListBuilder>();
-        services.Configure<JsonOptions>(x => x.SerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+        services.Configure<JsonOptions>(x =>{
+             var converter = new JsonStringEnumConverter();
+             x.SerializerOptions.Converters.Add(converter);
+             x.SerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+        });
         var authHost = config["Authentication:Schemes:Bearer:AuthAuthority"];
         Console.WriteLine($"{authHost}");
     }

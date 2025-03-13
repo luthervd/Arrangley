@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import { RootState } from "../../app/store"
-import { fetchTodoLists, saveTodoItem, deleteTodoItem } from "./todoApi";
+import { fetchTodoLists, saveTodoItem } from "./todoApi";
 import { TodoItem } from "./todoItem";
 
 interface TodoItemsState {
@@ -21,7 +21,6 @@ export const loadAsync = createAsyncThunk(
     "todo/fetchItems",
     async (arg: {token: string}) => {
         const response = await fetchTodoLists(arg.token);
-        // The value we return becomes the `fulfilled` action payload
         return response
     },
     {
@@ -37,8 +36,9 @@ export const loadAsync = createAsyncThunk(
 
 export const saveTodoAsync = createAsyncThunk(
     "todo/saveItem",
-    async(arg: {item: TodoItem, token: string}) => {
-        const response = await saveTodoItem(arg.item, arg.token);
+    async(arg: {item: TodoItem}, {getState }) => {
+        const { token } = getState() as RootState;
+        const response = await saveTodoItem(arg.item, token.token);
         return response;
     },
     {
@@ -52,14 +52,39 @@ export const saveTodoAsync = createAsyncThunk(
     }
 )
 
-export const deleteTodoAsync  = createAsyncThunk(
-    "todo/deleteItem",
-    async(arg: {itemId: number, token: string}, api)=> {
-        const isDeleted = await deleteTodoItem(arg.itemId, arg.token);
-        if(isDeleted){
-            api.dispatch(loadAsync({token: arg.token}));
+export const updateTodoAsync = createAsyncThunk("todo/updateItem",
+    async(arg:{item: TodoItem}, { getState }) => {
+        const { token }  = getState() as RootState;
+        return await saveTodoItem(arg.item, token.token);
+},
+{
+    condition:(arg,api)=>{
+        const todoState= api.getState() as { todoItems: TodoItemsState}
+        if(todoState.todoItems.savingStatus === "saving"){
+            return false;
         }
-        return isDeleted;
+        return true;
+    }}
+)
+
+export const setStateTodoAsync  = createAsyncThunk(
+    "todo/setState",
+    async(arg: {itemId: number | undefined, state: string}, api)=> {
+        const { token, todoItems }= api.getState() as RootState;
+        const item = todoItems.items.filter(x => x.id === arg.itemId)[0];
+        let next = { ...item, status: arg.state};
+        await saveTodoItem(next, token.token);
+        api.dispatch(loadAsync({token: token.token})); 
+        return item;
+    },
+    {
+        condition:(arg,api)=>{
+            const todoState= api.getState() as { todoItems: TodoItemsState}
+            if(todoState.todoItems.savingStatus === "saving"){
+                return false;
+            }
+            return true;
+        }
     }
 )
 
@@ -91,13 +116,28 @@ export const todoSlice = createSlice({
         .addCase(saveTodoAsync.rejected, (state) => {
             state.savingStatus = 'failed';
         })
-        .addCase(deleteTodoAsync.pending, (state) => {
-            state.deletingStatus = "deleting";
+        .addCase(updateTodoAsync.pending, (state) => {
+            state.savingStatus = "saving";
         })
-        .addCase(deleteTodoAsync.fulfilled, (state, action) => {
+        .addCase(updateTodoAsync.fulfilled, (state, action) => {
+            state.savingStatus = 'idle';
+            let items = state.items;
+            let index = items.findIndex(x => x.id === action.payload.id);
+            if(index > -1){
+                items[index] = action.payload
+            }
+            state.items = [...items];
+        })
+        .addCase(updateTodoAsync.rejected, (state) => {
+            state.savingStatus = 'failed';
+        })
+        .addCase(setStateTodoAsync.pending, (state) => {
+            state.savingStatus = "saving";
+        })
+        .addCase(setStateTodoAsync.fulfilled, (state) => {
             state.savingStatus ='idle';
         })
-        .addCase(deleteTodoAsync.rejected, (state) => {
+        .addCase(setStateTodoAsync.rejected, (state) => {
             state.savingStatus ='failed';
         })
 

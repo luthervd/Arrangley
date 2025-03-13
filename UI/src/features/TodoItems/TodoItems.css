@@ -55,6 +55,10 @@
   cursor: pointer;
 }
 
+.card .card-footer .item-status {
+    margin-left: 25px;
+}
+
 .card .card-content{
     min-height: 25vh;
 }

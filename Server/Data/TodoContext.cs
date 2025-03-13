@@ -40,5 +40,9 @@ public class TodoContext : DbContext
         .Property(x => x.Items)
         .HasConversion<string>(v => JsonSerializer.Serialize(v, jsonOptions), 
                                v => JsonSerializer.Deserialize<List<CheckListItem>>(v, jsonOptions));
+
+        modelBuilder.Entity<TodoItem>().Property(x => x.Status).HasDefaultValue(ItemStatus.Active);
+        
+        modelBuilder.Entity<TodoItem>().Property(x => x.Status).HasConversion(v => Enum.GetName<ItemStatus>(v), v => Enum.Parse<ItemStatus>(v));
     }
 }
