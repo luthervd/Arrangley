@@ -1,4 +1,5 @@
-﻿using OrganizeApi.CheckLists;
+﻿using System.Text.Json.Serialization;
+using OrganizeApi.CheckLists;
 namespace OrganizeApi.Todo;
 
 public class TodoItem
@@ -18,6 +19,8 @@ public class TodoItem
     public string Label {get; set; } = "Personal";
     
     public bool IsComplete { get; set; }
+
+    public ItemStatus Status { get; set;}
     
 
     public DateTime Created

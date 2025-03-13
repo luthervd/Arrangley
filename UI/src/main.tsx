@@ -4,11 +4,11 @@ import { Provider } from "react-redux"
 import { store } from "./app/store"
 import { Auth0Provider } from '@auth0/auth0-react';
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faCalendar, faEdit, faCircleMinus, faArrowUpRightFromSquare } from '@fortawesome/free-solid-svg-icons'
+import { faCalendar, faEdit, faCircleMinus, faCheckCircle, faArrowUpRightFromSquare, faAngleDown,faAngleRight, faAngleLeft, faAngleUp } from '@fortawesome/free-solid-svg-icons'
 import App from "./App"
 import "./index.css"
 
-library.add(faCalendar, faEdit, faCircleMinus, faArrowUpRightFromSquare);
+library.add(faCalendar, faEdit, faCircleMinus, faCheckCircle, faArrowUpRightFromSquare, faAngleDown, faAngleRight, faAngleLeft, faAngleUp);
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <Provider store={store}>

@@ -1,6 +1,6 @@
 import { ViewManager } from './features/ViewManager/ViewManager';
 import { useEffect } from 'react';
-import { useAppSelector, useAppDispatch } from "./app/hooks";
+import { useAppDispatch } from "./app/hooks";
 import { useAuth0 } from "@auth0/auth0-react";
 import { setToken } from './features/user/tokenSlice';
 import Menu from './features/menu/menu';

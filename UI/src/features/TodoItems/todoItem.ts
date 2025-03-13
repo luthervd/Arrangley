@@ -5,5 +5,7 @@ export interface TodoItem {
     created: string | null,
     due: string | null,
     label: string,
+    status: string,
     isComplete: boolean
 }
+
